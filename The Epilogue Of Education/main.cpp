@@ -7,6 +7,8 @@
 	#include "GL\glut.h"
 #endif
 
+#define PI 3.141592653589
+
 // ID to detect which scene the story is in.
 int SCENE_ID;
 
@@ -35,6 +37,24 @@ void print(char *string,
 
 	glPopMatrix();
 }
+
+// Function to draw Circle
+void drawCircle(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b, GLfloat radius)
+{
+	int triangleAmount = 1000;
+	GLfloat twicePi = 2.0f * PI;
+
+	glLineWidth(5.0);
+
+	glBegin(GL_LINES);
+	glColor3ub(r, g, b);
+	for (int i = 0; i <= triangleAmount; i++) {
+		glVertex2f(x, y);
+		glVertex2f(x + (radius * cos(i * twicePi / triangleAmount)), y + (radius * sin(i * twicePi / triangleAmount)));
+	}
+	glEnd();
+}
+
 
 /*
 * Scene 0 - Introduction Screen
@@ -193,6 +213,39 @@ void kindergarten(void)
 	glVertex2f(0, 75);
 	glEnd();
 	glLineWidth(1);
+
+	// Outside
+	glBegin(GL_POLYGON);
+	glColor3ub(12, 172, 232); // Sky Blue
+	glVertex2f(0, 600);
+	glVertex2f(180, 540);
+	glColor3ub(82, 163, 42); // Green Grass
+	glVertex2f(180, 165);
+	glVertex2f(0, 75);
+	glEnd();
+
+	// Door Hinges
+	glLineWidth(6);
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(63, 36, 19); // Chocolate Brown
+	glVertex2f(0, 600);
+	glVertex2f(180, 540);
+	glVertex2f(180, 165);
+	glVertex2f(0, 75);
+	glEnd();
+	glLineWidth(1);
+
+	// Door
+	glBegin(GL_POLYGON);
+	glColor3ub(63, 36, 19); // Chocolate Brown
+	glVertex2f(180, 540);
+	glVertex2f(30, 520);
+	glVertex2f(30, 180);
+	glVertex2f(180, 165);
+	glEnd();
+
+	// Door Knob
+	drawCircle(45, 350, 223, 189, 31, 5);
 }
 
 // Function to Render Scene
@@ -221,7 +274,7 @@ void renderScene(void)
 void mouseClick(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-		std::cout << x << "\t" << y << "\n";
+		std::cout << x << "\t" << 800 - y << "\n";
 }
 
 // Animator Updation Function
@@ -309,6 +362,10 @@ int main(int argc, char **argv)
 	// Enables Transparency
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
+
+	// Enable Smoothening
+	glEnable(GL_LINE_SMOOTH);
+	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 
 	glutDisplayFunc(renderScene);
 
