@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 
 // Apple Specific Compatibility Issues
 #ifdef __APPLE__
@@ -88,7 +89,8 @@ void summary(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Summary Title
-	print("Summary", 1, 1, 1, 1, 75, 650, .3, .3, 1.5);
+	print("Summary",
+		1, 1, 1, 1, 75, 650, .3, .3, 1.5);
 
 	print("As children, we are taught to follow, not to lead. We are taught to learn, not to explore.",
 		1, 1, 1, para1_fade, 75, 575, .125, .125, 1.25);
@@ -140,7 +142,7 @@ void kindergarten(void)
 	// Border for Ceiling
 	glLineWidth(2);
 	glBegin(GL_LINE_LOOP);
-	glColor3ub(0, 0, 0);
+	glColor3ub(0, 0, 0); // Black
 	glVertex2f(0, 800);
 	glVertex2f(200, 700);
 	glVertex2f(1400, 700);
@@ -163,7 +165,7 @@ void kindergarten(void)
 	// Border for Side Wall
 	glLineWidth(2);
 	glBegin(GL_LINE_LOOP);
-	glColor3ub(0, 0, 0);
+	glColor3ub(0, 0, 0); // Black
 	glVertex2f(0, 800);
 	glVertex2f(200, 700);
 	glVertex2f(200, 175);
@@ -186,7 +188,7 @@ void kindergarten(void)
 	// Border for Center Wall
 	glLineWidth(2);
 	glBegin(GL_LINE_LOOP);
-	glColor3ub(0, 0, 0);
+	glColor3ub(0, 0, 0); // Black
 	glVertex2f(200, 700);
 	glVertex2f(1400, 700);
 	glVertex2f(1400, 175);
@@ -206,7 +208,7 @@ void kindergarten(void)
 	// Border for Floor
 	glLineWidth(2);
 	glBegin(GL_LINE_LOOP);
-	glColor3ub(0, 0, 0);
+	glColor3ub(0, 0, 0); // Black
 	glVertex2f(200, 175);
 	glVertex2f(1400, 175);
 	glVertex2f(1400, 75);
@@ -245,7 +247,9 @@ void kindergarten(void)
 	glEnd();
 
 	// Door Knob
-	drawCircle(45, 350, 223, 189, 31, 5);
+	drawCircle(45, 350,
+		223, 189, 31, // Goldish Yellow
+		5);
 }
 
 // Function to Render Scene
