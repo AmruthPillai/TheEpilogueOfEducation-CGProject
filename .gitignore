@@ -45,6 +45,7 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 
+*.o
 *_i.c
 *_p.c
 *_i.h

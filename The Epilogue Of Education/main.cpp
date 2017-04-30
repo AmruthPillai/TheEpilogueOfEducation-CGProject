@@ -97,19 +97,19 @@ void summary(void)
 	print("We are taught to by heart, not to understand.",
 		1, 1, 1, para1_fade, 75, 550, .125, .125, 1.25);
 
-	print("When we grow up, things don’t change. We are given a meagre choice of either choosing",
+	print("When we grow up, things donï¿½t change. We are given a meagre choice of either choosing",
 		1, 1, 1, para2_fade, 75, 475, .125, .125, 1.25);
 	print("to be a Doctor or an Engineer, and the rest of the options are at bleak focus. ",
 		1, 1, 1, para2_fade, 75, 450, .125, .125, 1.25);
 
-	print("Choosing to be a doctor is a rich man’s dream.",
+	print("Choosing to be a doctor is a rich manï¿½s dream.",
 		1, 1, 1, para3_fade, 75, 375, .125, .125, 1.25);
 	print("Ending up as an engineer has become a curse. ",
 		1, 1, 1, para3_fade, 75, 350, .125, .125, 1.25);
 
 	print("Engineering is a field to invent and innovate, not to follow orders from higher officials.",
 		1, 1, 1, para4_fade, 75, 275, .125, .125, 1.25);
-	print("We might as well study the lives of Hitler’s Soldiers if we were to do so",
+	print("We might as well study the lives of Hitlerï¿½s Soldiers if we were to do so",
 		1, 1, 1, para4_fade, 75, 250, .125, .125, 1.25);
 	print("for the rest of out lives.",
 		1, 1, 1, para4_fade, 75, 225, .125, .125, 1.25);
@@ -255,6 +255,7 @@ void kindergarten(void)
 // Function to Render Scene
 void renderScene(void)
 {
+	// Switch to know which scene is playing
 	switch (SCENE_ID)
 	{
 	case 0:
@@ -371,13 +372,17 @@ int main(int argc, char **argv)
 	glEnable(GL_LINE_SMOOTH);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 
+	// Display Function
 	glutDisplayFunc(renderScene);
 
+	// Input Functions
 	glutKeyboardFunc(keyPress);
 	glutMouseFunc(mouseClick);
 
 	initializeScreen();
 
+	// Timer Function
+	// every 25 milliseconds, update function is called
 	glutTimerFunc(25, update, 0);
 
 	glutMainLoop();
