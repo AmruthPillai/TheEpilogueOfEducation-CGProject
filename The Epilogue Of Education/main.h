@@ -5,4 +5,3 @@ public:
 	main();
 	~main();
 };
-

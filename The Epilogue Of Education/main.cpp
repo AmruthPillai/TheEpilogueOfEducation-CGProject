@@ -6,8 +6,10 @@
 	#include "GLUT/glut.h"
 #else
 	#include "GL\glut.h"
+#include "main.h"
 #endif
 
+// Define the value of PI, upto 12 decimal places
 #define PI 3.141592653589
 
 // ID to detect which scene the story is in.
@@ -15,9 +17,9 @@ int SCENE_ID;
 
 // Variables for Animator Faders
 GLfloat title_fade,
-intro_next_text_appear, summary_next_text_appear,
-para1_fade, para2_fade, para3_fade, para4_fade,
-kg_a_fade, kg_apple_fade, kg_b_fade, kg_ball_fade, kg_soon_fade, kg_subtitle_1_appear;
+	intro_next_text_appear, summary_next_text_appear,
+	para1_fade, para2_fade, para3_fade, para4_fade,
+	kg_a_fade, kg_apple_fade, kg_b_fade, kg_ball_fade, kg_soon_fade, kg_subtitle_1_appear;
 
 // Function to Print Text
 void print(char *string,
@@ -40,7 +42,7 @@ void print(char *string,
 	glPopMatrix();
 }
 
-// Function to draw Circle
+// Function to Draw Circle
 void drawCircle(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b, GLfloat radius)
 {
 	int triangleAmount = 1000;
@@ -59,9 +61,13 @@ void drawCircle(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b, GLfloat r
 	glLineWidth(1.0);
 }
 
-// Function to draw Teacher
-void drawTeacher()
+// Function to Draw a Woman
+void drawWoman(GLfloat tx, GLfloat ty)
 {
+	glPushMatrix();
+
+	glTranslatef(tx, ty, 0);
+
 	// Neck
 	glLineWidth(10);
 	glBegin(GL_LINES);
@@ -81,7 +87,7 @@ void drawTeacher()
 	// Arms
 	glLineWidth(10);
 	glBegin(GL_LINES);
-	glColor3ub(232, 190, 123);
+	glColor3ub(232, 190, 123); // Lighter Skin
 	glVertex2f(470, 340);
 	glVertex2f(470, 240);
 	glVertex2f(475, 340);
@@ -119,7 +125,7 @@ void drawTeacher()
 	// Ribbon
 	glLineWidth(10);
 	glBegin(GL_LINES);
-	glColor3ub(37, 107, 202);
+	glColor3ub(37, 107, 202); // Blue
 	glVertex2f(480, 300);
 	glVertex2f(540, 300);
 	glEnd();
@@ -128,7 +134,7 @@ void drawTeacher()
 	// Legs
 	glLineWidth(10);
 	glBegin(GL_LINES);
-	glColor3ub(232, 190, 123);
+	glColor3ub(232, 190, 123); // Lighter Skin
 	glVertex2f(490, 180);
 	glVertex2f(490, 150);
 	glVertex2f(495, 180);
@@ -140,6 +146,8 @@ void drawTeacher()
 	glVertex2f(530, 150);
 	glEnd();
 	glLineWidth(1);
+
+	glPopMatrix();
 }
 
 /*
@@ -177,6 +185,7 @@ void summary(void)
 	print("Summary",
 		1, 1, 1, 1, 75, 650, .3, .3, 1.5);
 
+	// Summary Text
 	print("As children, we are taught to follow, not to lead. We are taught to learn, not to explore.",
 		1, 1, 1, para1_fade, 75, 575, .125, .125, 1.25);
 	print("We are taught to by heart, not to understand.",
@@ -203,15 +212,9 @@ void summary(void)
 		1, 1, 1, summary_next_text_appear, 580, 10, .09, .09, 1);
 }
 
-/*
-* Scene 2 - Kindergarten
-*/
-void kindergarten(void)
+// Function to Draw Ceiling
+void drawCeiling()
 {
-	// Background
-	glClearColor(0.05, 0.05, 0.05, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-
 	// Ceiling
 	glBegin(GL_POLYGON);
 	glColor3ub(166, 148, 124); // Dark Brown
@@ -234,7 +237,11 @@ void kindergarten(void)
 	glVertex2f(1400, 800);
 	glEnd();
 	glLineWidth(1);
+}
 
+// Function to Draw Side Wall
+void drawSideWall()
+{
 	// Side Wall
 	glBegin(GL_POLYGON);
 	glColor3ub(166, 148, 124); // Dark Brown
@@ -257,7 +264,11 @@ void kindergarten(void)
 	glVertex2f(0, 75);
 	glEnd();
 	glLineWidth(1);
+}
 
+// Function to Draw Center Wall
+void drawCenterWall()
+{
 	// Center Wall
 	glBegin(GL_POLYGON);
 	glColor3ub(251, 242, 233); // Light Brown
@@ -280,7 +291,10 @@ void kindergarten(void)
 	glVertex2f(200, 175);
 	glEnd();
 	glLineWidth(1);
+}
 
+// Function to Draw Floor
+void drawFloor() {
 	// Floor
 	glBegin(GL_POLYGON);
 	glColor3ub(166, 148, 124); // Dark Brown
@@ -300,17 +314,11 @@ void kindergarten(void)
 	glVertex2f(0, 75);
 	glEnd();
 	glLineWidth(1);
+}
 
-	// Outside
-	glBegin(GL_POLYGON);
-	glColor3ub(12, 172, 232); // Sky Blue
-	glVertex2f(0, 600);
-	glVertex2f(180, 540);
-	glColor3ub(82, 163, 42); // Green Grass
-	glVertex2f(180, 165);
-	glVertex2f(0, 75);
-	glEnd();
-
+// Function to Draw Door
+void drawDoor()
+{
 	// Door Hinges
 	glLineWidth(6);
 	glBegin(GL_LINE_LOOP);
@@ -335,6 +343,69 @@ void kindergarten(void)
 	drawCircle(45, 350,
 		223, 189, 31, // Goldish Yellow
 		5);
+}
+
+// Function to Draw Kid's Head
+void drawKidsHead(GLfloat tx, GLfloat ty)
+{
+	glPushMatrix();
+
+	glTranslatef(tx, ty, 0);
+
+	// Kid's Face
+	drawCircle(480, 110,
+		232, 190, 123, // Lighter Skin
+		25);
+
+	int hair_line;
+
+	// Kid's Hair Strands
+	hair_line = 400;
+	glLineWidth(3);
+	glBegin(GL_LINES);
+	glColor3ub(20, 20, 20); // Almost Black
+	glVertex2f(hair_line + 60, 138);
+	glVertex2f(hair_line + 65, 128);
+
+	glVertex2f(hair_line + 70, 140);
+	glVertex2f(hair_line + 75, 130);
+
+	glVertex2f(hair_line + 80, 140);
+	glVertex2f(hair_line + 85, 130);
+
+	glVertex2f(hair_line + 90, 138);
+	glVertex2f(hair_line + 95, 128);
+	glEnd();
+	glLineWidth(1);
+
+	glPopMatrix();
+}
+
+/*
+* Scene 2 - Kindergarten
+*/
+void kindergarten(void)
+{
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	drawCeiling();
+	drawSideWall();
+	drawCenterWall();
+	drawFloor();
+
+	// Outside
+	glBegin(GL_POLYGON);
+	glColor3ub(12, 172, 232); // Sky Blue
+	glVertex2f(0, 600);
+	glVertex2f(180, 540);
+	glColor3ub(82, 163, 42); // Green Grass
+	glVertex2f(180, 165);
+	glVertex2f(0, 75);
+	glEnd();
+
+	drawDoor();
 
 	// Blackboard
 	glBegin(GL_POLYGON);
@@ -357,7 +428,7 @@ void kindergarten(void)
 	glLineWidth(1);
 
 	// Teacher in Kindergarten
-	drawTeacher();
+	drawWoman(0, 0);
 
 	// Teacher's Table
 	glBegin(GL_POLYGON);
@@ -431,103 +502,11 @@ void kindergarten(void)
 	glVertex2f(1180, 120);
 	glEnd();
 
-	// First Kid
-	drawCircle(480, 110,
-		203, 166, 108, // Face Color #1 - Darker
-		25);
-
-	// Second Kid
-	drawCircle(620, 110,
-		232, 190, 123, // Face Color #2 - Lighter
-		25);
-
-	// Third Kid
-	drawCircle(940, 110,
-		232, 190, 123, // Face Color #2 - Lighter
-		25);
-
-	// Third Kid
-	drawCircle(1080, 110,
-		203, 166, 108, // Face Color #1 - Darker
-		25);
-
-	int hair_line;
-
-	// First Kid's Hair
-	hair_line = 400;
-	glLineWidth(3);
-	glBegin(GL_LINES);
-	glColor3ub(20, 20, 20); // Almost Black
-	glVertex2f(hair_line + 60, 138);
-	glVertex2f(hair_line + 65, 128);
-
-	glVertex2f(hair_line + 70, 140);
-	glVertex2f(hair_line + 75, 130);
-
-	glVertex2f(hair_line + 80, 140);
-	glVertex2f(hair_line + 85, 130);
-
-	glVertex2f(hair_line + 90, 138);
-	glVertex2f(hair_line + 95, 128);
-	glEnd();
-	glLineWidth(1);
-
-	// Second Kid's Hair
-	hair_line = 540;
-	glLineWidth(3);
-	glBegin(GL_LINES);
-	glColor3ub(20, 20, 20); // Almost Black
-	glVertex2f(hair_line + 60, 138);
-	glVertex2f(hair_line + 65, 128);
-
-	glVertex2f(hair_line + 70, 140);
-	glVertex2f(hair_line + 75, 130);
-
-	glVertex2f(hair_line + 80, 140);
-	glVertex2f(hair_line + 85, 130);
-
-	glVertex2f(hair_line + 90, 138);
-	glVertex2f(hair_line + 95, 128);
-	glEnd();
-	glLineWidth(1);
-
-	// Third Kid's Hair
-	hair_line = 860;
-	glLineWidth(3);
-	glBegin(GL_LINES);
-	glColor3ub(20, 20, 20); // Almost Black
-	glVertex2f(hair_line + 60, 138);
-	glVertex2f(hair_line + 65, 128);
-
-	glVertex2f(hair_line + 70, 140);
-	glVertex2f(hair_line + 75, 130);
-
-	glVertex2f(hair_line + 80, 140);
-	glVertex2f(hair_line + 85, 130);
-
-	glVertex2f(hair_line + 90, 138);
-	glVertex2f(hair_line + 95, 128);
-	glEnd();
-	glLineWidth(1);
-
-	// Fourth Kid's Hair
-	hair_line = 1000;
-	glLineWidth(3);
-	glBegin(GL_LINES);
-	glColor3ub(20, 20, 20); // Almost Black
-	glVertex2f(hair_line + 60, 138);
-	glVertex2f(hair_line + 65, 128);
-
-	glVertex2f(hair_line + 70, 140);
-	glVertex2f(hair_line + 75, 130);
-
-	glVertex2f(hair_line + 80, 140);
-	glVertex2f(hair_line + 85, 130);
-
-	glVertex2f(hair_line + 90, 138);
-	glVertex2f(hair_line + 95, 128);
-	glEnd();
-	glLineWidth(1);
+	// Kid's Heads
+	drawKidsHead(0, 0);
+	drawKidsHead(140, 0);
+	drawKidsHead(460, 0);
+	drawKidsHead(600, 0);
 
 	print("A",
 		1, 1, 1, kg_a_fade, 600, 440, .3, .3, 3);
