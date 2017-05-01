@@ -227,7 +227,7 @@ void summary(void)
 }
 
 // Function to Draw Ceiling
-void drawCeiling()
+void KG_drawCeiling()
 {
 	// Ceiling
 	glBegin(GL_POLYGON);
@@ -254,7 +254,7 @@ void drawCeiling()
 }
 
 // Function to Draw Side Wall
-void drawSideWall()
+void KG_drawSideWall()
 {
 	// Side Wall
 	glBegin(GL_POLYGON);
@@ -281,7 +281,7 @@ void drawSideWall()
 }
 
 // Function to Draw Center Wall
-void drawCenterWall()
+void KG_drawCenterWall()
 {
 	// Center Wall
 	glBegin(GL_POLYGON);
@@ -308,7 +308,7 @@ void drawCenterWall()
 }
 
 // Function to Draw Floor
-void drawFloor() {
+void KG_drawFloor() {
 	// Floor
 	glBegin(GL_POLYGON);
 	glColor3ub(166, 148, 124); // Dark Brown
@@ -331,7 +331,7 @@ void drawFloor() {
 }
 
 // Function to Draw Door
-void drawDoor()
+void KG_drawDoor()
 {
 	// Door Hinges
 	glLineWidth(6);
@@ -360,7 +360,7 @@ void drawDoor()
 }
 
 // Function to Draw Kid's Head
-void drawKidsHead(GLfloat tx, GLfloat ty)
+void KG_drawKidsHead(GLfloat tx, GLfloat ty)
 {
 	glPushMatrix();
 
@@ -396,7 +396,7 @@ void drawKidsHead(GLfloat tx, GLfloat ty)
 }
 
 // Function to Draw Blackboard
-void drawBlackboard()
+void KG_drawBlackboard()
 {
 	// Blackboard
 	glBegin(GL_POLYGON);
@@ -420,7 +420,7 @@ void drawBlackboard()
 }
 
 // Function to Draw Teacher's Table
-void drawTeachersTable()
+void KG_drawTeachersTable()
 {
 	// Teacher's Table
 	glBegin(GL_POLYGON);
@@ -460,7 +460,7 @@ void drawTeachersTable()
 }
 
 // Function to Draw Children's Desks
-void drawChildrensDesks()
+void KG_drawChildrensDesks()
 {
 	// Left Children's Desk
 	glBegin(GL_POLYGON);
@@ -524,10 +524,10 @@ void kindergarten()
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	drawCeiling();
-	drawSideWall();
-	drawCenterWall();
-	drawFloor();
+	KG_drawCeiling();
+	KG_drawSideWall();
+	KG_drawCenterWall();
+	KG_drawFloor();
 
 	// Outside
 	glBegin(GL_POLYGON);
@@ -539,22 +539,21 @@ void kindergarten()
 	glVertex2f(0, 75);
 	glEnd();
 
-	drawDoor();
+	KG_drawDoor();
 
-	drawBlackboard();
+	KG_drawBlackboard();
 
-	// Teacher in Kindergarten
+	// Teacher
 	drawWoman(0, 0);
 
-	drawTeachersTable();
+	KG_drawTeachersTable();
 
-	drawChildrensDesks();
+	KG_drawChildrensDesks();
 
-	// Kid's Heads
-	drawKidsHead(0, 0);
-	drawKidsHead(140, 0);
-	drawKidsHead(460, 0);
-	drawKidsHead(600, 0);
+	KG_drawKidsHead(0, 0);
+	KG_drawKidsHead(140, 0);
+	KG_drawKidsHead(460, 0);
+	KG_drawKidsHead(600, 0);
 
 	print("A",
 		1, 1, 1, kg_a_fade, 600, 440, .3, .3, 3);
@@ -591,6 +590,159 @@ void primarySchoolTitleScreen()
 		1, 1, 1, ps_title_fade, 400, 250 + trans_y_title2, .3, .3, 2);
 }
 
+// Function to Draw Ceiling
+void PS_drawCeiling()
+{
+	// Ceiling
+	glBegin(GL_POLYGON);
+	glColor3ub(65, 105, 120); // Aqua
+	glVertex2f(0, 800);
+	glVertex2f(0, 700);
+	glVertex2f(100, 650);
+	glVertex2f(1400, 650);
+	glVertex2f(1400, 800);
+	glEnd();
+
+	// Border for Ceiling
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 0, 0);
+	glVertex2f(0, 800);
+	glVertex2f(0, 700);
+	glVertex2f(100, 650);
+	glVertex2f(1400, 650);
+	glVertex2f(1400, 800);
+	glEnd();
+}
+
+// Function to Draw Side Wall
+void PS_drawSideWall()
+{
+	// Side Wall
+	glBegin(GL_POLYGON);
+	glColor3ub(176, 204, 217); // Light Aqua
+	glVertex2f(0, 700);
+	glVertex2f(100, 650);
+	glVertex2f(100, 200);
+	glVertex2f(0, 100);
+	glEnd();
+
+	// Border for Side Wall
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 0, 0);
+	glVertex2f(0, 700);
+	glVertex2f(100, 650);
+	glVertex2f(100, 200);
+	glVertex2f(0, 100);
+	glEnd();
+}
+
+// Function to Draw Center Wall
+void PS_drawCenterWall()
+{
+	// Center Wall
+	glBegin(GL_POLYGON);
+	glColor3ub(120, 160, 175);
+	glVertex2f(100, 650);
+	glVertex2f(700, 650);
+	glColor3ub(164, 191, 203);
+	glVertex2f(700, 200);
+	glVertex2f(100, 200);
+	glEnd();
+
+	// Border for Center Wall
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 0, 0);
+	glVertex2f(100, 650);
+	glVertex2f(700, 650);
+	glVertex2f(700, 200);
+	glVertex2f(100, 200);
+	glEnd();
+}
+
+// Function to Draw Dividing Wall
+void PS_drawDividingWall()
+{
+	// Dividing Wall
+	glBegin(GL_POLYGON);
+	glColor3ub(176, 204, 217); // Light Aqua
+	glVertex2f(700, 650);
+	glVertex2f(850, 800);
+	glVertex2f(850, 100);
+	glVertex2f(700, 200);
+	glEnd();
+
+	// Border for Dividing Wall
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 0, 0);
+	glVertex2f(700, 650);
+	glVertex2f(850, 800);
+	glVertex2f(850, 100);
+	glVertex2f(700, 200);
+	glEnd();
+}
+
+// Function to Draw Kitchen Wall
+void PS_drawKitchenWall()
+{
+	// Kitchen Wall
+	glBegin(GL_POLYGON);
+	glColor3ub(120, 160, 175);
+	glVertex2f(850, 800);
+	glVertex2f(1400, 800);
+	glColor3ub(164, 191, 203);
+	glVertex2f(1400, 100);
+	glVertex2f(850, 100);
+	glEnd();
+
+	// Border for Kitchen Wall
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 0, 0);
+	glVertex2f(700, 650);
+	glVertex2f(850, 800);
+	glVertex2f(850, 100);
+	glVertex2f(700, 200);
+	glEnd();
+}
+
+// Function to Draw Floor
+void PS_drawFloor()
+{
+	// Floor
+	glBegin(GL_POLYGON);
+	glColor3ub(120, 160, 175);
+	glVertex2f(100, 200);
+	glVertex2f(700, 200);
+	glVertex2f(850, 100);
+	glVertex2f(0, 100);
+	glEnd();
+
+	// Border for Floor
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 0, 0);
+	glVertex2f(100, 200);
+	glVertex2f(700, 200);
+	glVertex2f(850, 100);
+	glVertex2f(0, 100);
+	glEnd();
+}
+
+/*
+*	Scene 5 - Primary School
+*/
+void primarySchool()
+{
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	PS_drawCeiling();
+	PS_drawSideWall();
+	PS_drawCenterWall();
+	PS_drawDividingWall();
+	PS_drawKitchenWall();
+	PS_drawFloor();
+}
+
 // Function to Render Scene
 void renderScene(void)
 {
@@ -611,6 +763,9 @@ void renderScene(void)
 		break;
 	case 4:
 			primarySchoolTitleScreen();
+		break;
+	case 5:
+		primarySchool();
 		break;
 	default:
 		break;
@@ -754,7 +909,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(1400, 800);
-	glutCreateWindow("OpenGL First Window");
+	glutCreateWindow("The Epilogue of Education");
 
 	// Enables Transparency
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
