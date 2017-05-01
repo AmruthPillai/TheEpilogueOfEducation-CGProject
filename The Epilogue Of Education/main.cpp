@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 #include <math.h>
 
 // Apple Specific Compatibility Issues
@@ -19,7 +20,20 @@ int SCENE_ID;
 GLfloat title_fade,
 	intro_next_text_appear, summary_next_text_appear,
 	para1_fade, para2_fade, para3_fade, para4_fade,
-	kg_a_fade, kg_apple_fade, kg_b_fade, kg_ball_fade, kg_soon_fade, kg_subtitle_1_appear;
+	kg_chap_fade, kg_title_fade,
+	kg_a_fade, kg_apple_fade, kg_b_fade, kg_ball_fade, kg_soon_fade, kg_subtitle_1_appear,
+	ps_chap_fade, ps_title_fade;
+
+// Variables for Translation Animators
+GLfloat trans_x_chap1, trans_x_title1,
+	trans_x_chap2, trans_y_title2;
+
+// Function to Create Delay
+void delay(float secs)
+{
+	float end = clock()/CLOCKS_PER_SEC + secs;
+	while((clock()/CLOCKS_PER_SEC) < end);
+}
 
 // Function to Print Text
 void print(char *string,
@@ -381,32 +395,9 @@ void drawKidsHead(GLfloat tx, GLfloat ty)
 	glPopMatrix();
 }
 
-/*
-* Scene 2 - Kindergarten
-*/
-void kindergarten(void)
+// Function to Draw Blackboard
+void drawBlackboard()
 {
-	// Background
-	glClearColor(0.05, 0.05, 0.05, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	drawCeiling();
-	drawSideWall();
-	drawCenterWall();
-	drawFloor();
-
-	// Outside
-	glBegin(GL_POLYGON);
-	glColor3ub(12, 172, 232); // Sky Blue
-	glVertex2f(0, 600);
-	glVertex2f(180, 540);
-	glColor3ub(82, 163, 42); // Green Grass
-	glVertex2f(180, 165);
-	glVertex2f(0, 75);
-	glEnd();
-
-	drawDoor();
-
 	// Blackboard
 	glBegin(GL_POLYGON);
 	glColor3ub(20, 20, 20); // Almost Black
@@ -426,10 +417,11 @@ void kindergarten(void)
 	glVertex2f(450, 300);
 	glEnd();
 	glLineWidth(1);
+}
 
-	// Teacher in Kindergarten
-	drawWoman(0, 0);
-
+// Function to Draw Teacher's Table
+void drawTeachersTable()
+{
 	// Teacher's Table
 	glBegin(GL_POLYGON);
 	glColor3ub(63, 36, 19); // Chocolate Brown
@@ -465,7 +457,11 @@ void kindergarten(void)
 	glVertex2f(1010, 130);
 	glVertex2f(1020, 130);
 	glEnd();
+}
 
+// Function to Draw Children's Desks
+void drawChildrensDesks()
+{
 	// Left Children's Desk
 	glBegin(GL_POLYGON);
 	glColor3ub(138, 82, 32); // Wood Brown
@@ -501,6 +497,58 @@ void kindergarten(void)
 	glVertex2f(1180, 115);
 	glVertex2f(1180, 120);
 	glEnd();
+}
+
+/*
+* Scene 2 - Kindergarten Title Screen
+*/
+void kindergartenTitleScreen()
+{
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	// Story Title
+	print("CHAPTER 1",
+		1, 1, 1, kg_chap_fade, 300 + trans_x_chap1, 400, .2, .2, 2);
+	print("Kindergarten",
+		1, 1, 1, kg_title_fade, 300 + trans_x_title1, 350, .3, .3, 2);
+}
+
+/*
+* Scene 3 - Kindergarten
+*/
+void kindergarten()
+{
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	drawCeiling();
+	drawSideWall();
+	drawCenterWall();
+	drawFloor();
+
+	// Outside
+	glBegin(GL_POLYGON);
+	glColor3ub(12, 172, 232); // Sky Blue
+	glVertex2f(0, 600);
+	glVertex2f(180, 540);
+	glColor3ub(82, 163, 42); // Green Grass
+	glVertex2f(180, 165);
+	glVertex2f(0, 75);
+	glEnd();
+
+	drawDoor();
+
+	drawBlackboard();
+
+	// Teacher in Kindergarten
+	drawWoman(0, 0);
+
+	drawTeachersTable();
+
+	drawChildrensDesks();
 
 	// Kid's Heads
 	drawKidsHead(0, 0);
@@ -527,6 +575,22 @@ void kindergarten(void)
 		1, 1, 1, kg_subtitle_1_appear, 380, 30, .14, .14, 1);
 }
 
+/*
+*	Scene 4 - Primary School Title Screen
+*/
+void primarySchoolTitleScreen()
+{
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	// Story Title
+	print("CHAPTER 2",
+		1, 1, 1, ps_chap_fade, 300 + trans_x_chap2, 400, .2, .2, 2);
+	print("Primary School",
+		1, 1, 1, ps_title_fade, 400, 250 + trans_y_title2, .3, .3, 2);
+}
+
 // Function to Render Scene
 void renderScene(void)
 {
@@ -540,7 +604,13 @@ void renderScene(void)
 		summary();
 		break;
 	case 2:
+		kindergartenTitleScreen();
+		break;
+	case 3:
 		kindergarten();
+		break;
+	case 4:
+			primarySchoolTitleScreen();
 		break;
 	default:
 		break;
@@ -584,8 +654,22 @@ void update(int) {
 						summary_next_text_appear = 1;
 	}
 
-	// Kindergarten
+	// Kindergarten Title Screen
 	if (SCENE_ID == 2) {
+		if (trans_x_chap1 < 100)
+			trans_x_chap1 += 1.5;
+		if (trans_x_title1 < 100)
+			trans_x_title1 += 1;
+
+		if (kg_chap_fade < 1)
+			kg_chap_fade += .01;
+
+		if (kg_title_fade < 1)
+			kg_title_fade += .01;
+	}
+
+	// Kindergarten
+	if (SCENE_ID == 3) {
 		if (kg_a_fade < 1)
 			kg_a_fade += .01;
 			else
@@ -603,6 +687,20 @@ void update(int) {
 							else
 								kg_subtitle_1_appear = 1;
 
+	}
+
+	// Primary School Title Screen
+	if (SCENE_ID == 4) {
+		if (trans_x_chap2 < 100)
+			trans_x_chap2 += 1.5;
+		if (trans_y_title2 < 100)
+			trans_y_title2 += 1;
+
+		if (ps_chap_fade < 1)
+			ps_chap_fade += .01;
+
+		if (ps_title_fade < 1)
+			ps_title_fade += .01;
 	}
 
 	// Recalls the Display Function
