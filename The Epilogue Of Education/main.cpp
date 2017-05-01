@@ -330,6 +330,20 @@ void KG_drawFloor() {
 	glLineWidth(1);
 }
 
+// Function to Draw Outside Background
+void KG_drawOutside()
+{
+	// Outside
+	glBegin(GL_POLYGON);
+	glColor3ub(12, 172, 232); // Sky Blue
+	glVertex2f(0, 600);
+	glVertex2f(180, 540);
+	glColor3ub(82, 163, 42); // Green Grass
+	glVertex2f(180, 165);
+	glVertex2f(0, 75);
+	glEnd();
+}
+
 // Function to Draw Door
 void KG_drawDoor()
 {
@@ -529,15 +543,7 @@ void kindergarten()
 	KG_drawCenterWall();
 	KG_drawFloor();
 
-	// Outside
-	glBegin(GL_POLYGON);
-	glColor3ub(12, 172, 232); // Sky Blue
-	glVertex2f(0, 600);
-	glVertex2f(180, 540);
-	glColor3ub(82, 163, 42); // Green Grass
-	glVertex2f(180, 165);
-	glVertex2f(0, 75);
-	glEnd();
+	KG_drawOutside();
 
 	KG_drawDoor();
 
@@ -623,7 +629,7 @@ void PS_drawSideWall()
 	glVertex2f(0, 700);
 	glVertex2f(100, 650);
 	glVertex2f(100, 200);
-	glVertex2f(0, 100);
+	glVertex2f(0, 75);
 	glEnd();
 
 	// Border for Side Wall
@@ -632,7 +638,7 @@ void PS_drawSideWall()
 	glVertex2f(0, 700);
 	glVertex2f(100, 650);
 	glVertex2f(100, 200);
-	glVertex2f(0, 100);
+	glVertex2f(0, 75);
 	glEnd();
 }
 
@@ -667,7 +673,7 @@ void PS_drawDividingWall()
 	glColor3ub(176, 204, 217); // Light Aqua
 	glVertex2f(700, 650);
 	glVertex2f(850, 800);
-	glVertex2f(850, 100);
+	glVertex2f(850, 75);
 	glVertex2f(700, 200);
 	glEnd();
 
@@ -676,7 +682,7 @@ void PS_drawDividingWall()
 	glColor3ub(0, 0, 0);
 	glVertex2f(700, 650);
 	glVertex2f(850, 800);
-	glVertex2f(850, 100);
+	glVertex2f(850, 75);
 	glVertex2f(700, 200);
 	glEnd();
 }
@@ -686,21 +692,20 @@ void PS_drawKitchenWall()
 {
 	// Kitchen Wall
 	glBegin(GL_POLYGON);
-	glColor3ub(120, 160, 175);
+	glColor3ub(164, 191, 203);
 	glVertex2f(850, 800);
 	glVertex2f(1400, 800);
-	glColor3ub(164, 191, 203);
-	glVertex2f(1400, 100);
-	glVertex2f(850, 100);
+	glVertex2f(1400, 75);
+	glVertex2f(850, 75);
 	glEnd();
 
 	// Border for Kitchen Wall
 	glBegin(GL_LINE_LOOP);
 	glColor3ub(0, 0, 0);
-	glVertex2f(700, 650);
 	glVertex2f(850, 800);
-	glVertex2f(850, 100);
-	glVertex2f(700, 200);
+	glVertex2f(1400, 800);
+	glVertex2f(1400, 75);
+	glVertex2f(850, 75);
 	glEnd();
 }
 
@@ -712,8 +717,8 @@ void PS_drawFloor()
 	glColor3ub(120, 160, 175);
 	glVertex2f(100, 200);
 	glVertex2f(700, 200);
-	glVertex2f(850, 100);
-	glVertex2f(0, 100);
+	glVertex2f(850, 75);
+	glVertex2f(0, 75);
 	glEnd();
 
 	// Border for Floor
@@ -721,11 +726,112 @@ void PS_drawFloor()
 	glColor3ub(0, 0, 0);
 	glVertex2f(100, 200);
 	glVertex2f(700, 200);
-	glVertex2f(850, 100);
-	glVertex2f(0, 100);
+	glVertex2f(850, 75);
+	glVertex2f(0, 75);
 	glEnd();
 }
 
+// Function to Draw Door
+void PS_drawDoor()
+{
+	// Door
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(300, 500);
+	glVertex2f(500, 500);
+	glVertex2f(500, 200);
+	glVertex2f(300, 200);
+	glEnd();
+
+	// Border
+	glLineWidth(5);
+	glBegin(GL_LINES);
+	glColor3ub(122, 76, 29); // Wood Dark Brown
+	glVertex2f(300, 200);
+	glVertex2f(300, 500);
+	glVertex2f(300, 500);
+	glVertex2f(500, 500);
+	glVertex2f(500, 500);
+	glVertex2f(500, 200);
+	glEnd();
+	glLineWidth(1);
+}
+
+void PS_drawBackground()
+{
+	glBegin(GL_POLYGON);
+	glColor3ub(12, 172, 232); // Sky Blue
+	glVertex2f(300, 500);
+	glVertex2f(500, 500);
+	glColor3ub(82, 163, 42); // Green Grass
+	glVertex2f(500, 275);
+	glVertex2f(300, 275);
+	glEnd();
+}
+
+void PS_drawRoad()
+{
+	glBegin(GL_POLYGON);
+	glColor3ub(40, 40, 40);
+	glVertex2f(300, 275);
+	glVertex2f(500, 275);
+	glVertex2f(500, 200);
+	glVertex2f(300, 200);
+	glEnd();
+
+	glLineWidth(3);
+	glBegin(GL_LINES);
+	glColor3ub(255, 255, 255);
+	glVertex2f(300, 235);
+	glVertex2f(380, 235);
+	glVertex2f(420, 235);
+	glVertex2f(500, 235);
+	glEnd();
+	glLineWidth(1);
+}
+
+// x values 950, 1300
+// y values 550
+
+void PS_drawOutside()
+{
+	PS_drawBackground();
+	PS_drawRoad();
+}
+
+void PS_drawKitchenCounter()
+{
+	// Kitchen Counter
+	glBegin(GL_POLYGON);
+	glColor3ub(138, 82, 32); //Wood Brown
+	glVertex2f(950, 300);
+	glVertex2f(980, 325);
+	glVertex2f(1300, 325);
+	glVertex2f(1300, 300);
+	glEnd();
+}
+
+void PS_drawKitchen()
+{
+	glBegin(GL_POLYGON);
+	glColor3ub(247, 239, 187);
+	glVertex2f(950, 550);
+	glVertex2f(1300, 550);
+	glVertex2f(1300, 300);
+	glVertex2f(950, 300);
+	glEnd();
+
+	drawWoman(620, 50);
+
+	// Hack to Hide Woman's bODY
+	glBegin(GL_POLYGON);
+	glColor3ub(164, 191, 203);
+	glVertex2f(1050, 300);
+	glVertex2f(1200, 300);
+	glVertex2f(1200, 140);
+	glVertex2f(1050, 140);
+	glEnd();
+}
 /*
 *	Scene 5 - Primary School
 */
@@ -739,8 +845,14 @@ void primarySchool()
 	PS_drawSideWall();
 	PS_drawCenterWall();
 	PS_drawDividingWall();
-	PS_drawKitchenWall();
 	PS_drawFloor();
+
+	PS_drawDoor();
+
+	PS_drawOutside();
+
+	PS_drawKitchenWall();
+	PS_drawKitchen();
 }
 
 // Function to Render Scene
