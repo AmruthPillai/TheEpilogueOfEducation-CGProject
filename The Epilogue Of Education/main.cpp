@@ -28,8 +28,7 @@ GLfloat trans_x_chap1, trans_x_title1,
 	trans_x_chap2, trans_y_title2;
 
 // Function to Create Delay
-void delay(float secs)
-{
+void delay(float secs) {
 	float end = clock()/CLOCKS_PER_SEC + secs;
 	while((clock()/CLOCKS_PER_SEC) < end);
 }
@@ -39,8 +38,7 @@ void print(char *string,
 	GLfloat r, GLfloat g, GLfloat b, GLfloat a,
 	GLint x, GLint y,
 	GLfloat w, GLfloat h,
-	GLfloat strokeSize)
-{
+	GLfloat strokeSize) {
 	glPushMatrix();
 
 	glColor4f(r, g, b, a);
@@ -56,8 +54,7 @@ void print(char *string,
 }
 
 // Function to Draw Circle
-void drawCircle(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b, GLfloat radius)
-{
+void drawCircle(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b, GLfloat radius) {
 	int triangleAmount = 1000;
 	GLfloat twicePi = 2.0f * PI;
 
@@ -78,8 +75,7 @@ void drawCircle(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b, GLfloat r
 void drawWoman(GLfloat tx, GLfloat ty,
 	GLfloat top_r, GLfloat top_g, GLfloat top_b,
 	GLfloat ribbon_r, GLfloat ribbon_g, GLfloat ribbon_b,
-	GLfloat skirt_r, GLfloat skirt_g, GLfloat skirt_b)
-{
+	GLfloat skirt_r, GLfloat skirt_g, GLfloat skirt_b) {
 	glPushMatrix();
 
 	glTranslatef(tx, ty, 0);
@@ -169,8 +165,7 @@ void drawWoman(GLfloat tx, GLfloat ty,
 /*
 * Scene 0 - Introduction Screen
 */
-void introduction(void)
-{
+void introduction() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -191,8 +186,7 @@ void introduction(void)
 /*
 * Scene 1 - Summary Screen
 */
-void summary(void)
-{
+void summary() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -229,8 +223,7 @@ void summary(void)
 }
 
 // Function to Draw Ceiling
-void KG_drawCeiling()
-{
+void KG_drawCeiling() {
 	// Ceiling
 	glBegin(GL_POLYGON);
 	glColor3ub(166, 148, 124); // Dark Brown
@@ -256,8 +249,7 @@ void KG_drawCeiling()
 }
 
 // Function to Draw Side Wall
-void KG_drawSideWall()
-{
+void KG_drawSideWall() {
 	// Side Wall
 	glBegin(GL_POLYGON);
 	glColor3ub(166, 148, 124); // Dark Brown
@@ -283,8 +275,7 @@ void KG_drawSideWall()
 }
 
 // Function to Draw Center Wall
-void KG_drawCenterWall()
-{
+void KG_drawCenterWall() {
 	// Center Wall
 	glBegin(GL_POLYGON);
 	glColor3ub(251, 242, 233); // Light Brown
@@ -333,8 +324,7 @@ void KG_drawFloor() {
 }
 
 // Function to Draw Outside Background
-void KG_drawOutside()
-{
+void KG_drawOutside() {
 	// Outside
 	glBegin(GL_POLYGON);
 	glColor3ub(12, 172, 232); // Sky Blue
@@ -347,8 +337,7 @@ void KG_drawOutside()
 }
 
 // Function to Draw Door
-void KG_drawDoor()
-{
+void KG_drawDoor() {
 	// Door Hinges
 	glLineWidth(6);
 	glBegin(GL_LINE_LOOP);
@@ -376,8 +365,7 @@ void KG_drawDoor()
 }
 
 // Function to Draw Kid's Head
-void KG_drawKidsHead(GLfloat tx, GLfloat ty)
-{
+void KG_drawKidsHead(GLfloat tx, GLfloat ty) {
 	glPushMatrix();
 
 	glTranslatef(tx, ty, 0);
@@ -412,8 +400,7 @@ void KG_drawKidsHead(GLfloat tx, GLfloat ty)
 }
 
 // Function to Draw Blackboard
-void KG_drawBlackboard()
-{
+void KG_drawBlackboard() {
 	// Blackboard
 	glBegin(GL_POLYGON);
 	glColor3ub(20, 20, 20); // Almost Black
@@ -436,8 +423,7 @@ void KG_drawBlackboard()
 }
 
 // Function to Draw Teacher's Table
-void KG_drawTeachersTable()
-{
+void KG_drawTeachersTable() {
 	// Teacher's Table
 	glBegin(GL_POLYGON);
 	glColor3ub(63, 36, 19); // Chocolate Brown
@@ -476,8 +462,7 @@ void KG_drawTeachersTable()
 }
 
 // Function to Draw Children's Desks
-void KG_drawChildrensDesks()
-{
+void KG_drawChildrensDesks() {
 	// Left Children's Desk
 	glBegin(GL_POLYGON);
 	glColor3ub(138, 82, 32); // Wood Brown
@@ -518,8 +503,7 @@ void KG_drawChildrensDesks()
 /*
 * Scene 2 - Kindergarten Title Screen
 */
-void kindergartenTitleScreen()
-{
+void kindergartenTitleScreen() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -534,8 +518,7 @@ void kindergartenTitleScreen()
 /*
 * Scene 3 - Kindergarten
 */
-void kindergarten()
-{
+void kindergarten() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -589,8 +572,7 @@ void kindergarten()
 /*
 *	Scene 4 - Primary School Title Screen
 */
-void primarySchoolTitleScreen()
-{
+void primarySchoolTitleScreen() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -603,8 +585,7 @@ void primarySchoolTitleScreen()
 }
 
 // Function to Draw Ceiling
-void PS_drawCeiling()
-{
+void PS_drawCeiling() {
 	// Ceiling
 	glBegin(GL_POLYGON);
 	glColor3ub(65, 105, 120); // Aqua
@@ -627,8 +608,7 @@ void PS_drawCeiling()
 }
 
 // Function to Draw Side Wall
-void PS_drawSideWall()
-{
+void PS_drawSideWall() {
 	// Side Wall
 	glBegin(GL_POLYGON);
 	glColor3ub(176, 204, 217); // Light Aqua
@@ -649,8 +629,7 @@ void PS_drawSideWall()
 }
 
 // Function to Draw Center Wall
-void PS_drawCenterWall()
-{
+void PS_drawCenterWall() {
 	// Center Wall
 	glBegin(GL_POLYGON);
 	glColor3ub(120, 160, 175);
@@ -672,8 +651,7 @@ void PS_drawCenterWall()
 }
 
 // Function to Draw Dividing Wall
-void PS_drawDividingWall()
-{
+void PS_drawDividingWall() {
 	// Dividing Wall
 	glBegin(GL_POLYGON);
 	glColor3ub(176, 204, 217); // Light Aqua
@@ -694,8 +672,7 @@ void PS_drawDividingWall()
 }
 
 // Function to Draw Kitchen Wall
-void PS_drawKitchenWall()
-{
+void PS_drawKitchenWall() {
 	// Kitchen Wall
 	glBegin(GL_POLYGON);
 	glColor3ub(164, 191, 203);
@@ -716,8 +693,7 @@ void PS_drawKitchenWall()
 }
 
 // Function to Draw Floor
-void PS_drawFloor()
-{
+void PS_drawFloor() {
 	// Floor
 	glBegin(GL_POLYGON);
 	glColor3ub(120, 160, 175);
@@ -738,8 +714,7 @@ void PS_drawFloor()
 }
 
 // Function to Draw Door
-void PS_drawDoor()
-{
+void PS_drawDoor() {
 	// Door
 	glBegin(GL_POLYGON);
 	glColor3ub(255, 255, 255);
@@ -763,8 +738,7 @@ void PS_drawDoor()
 	glLineWidth(1);
 }
 
-void PS_drawBackground()
-{
+void PS_drawBackground() {
 	glBegin(GL_POLYGON);
 	glColor3ub(12, 172, 232); // Sky Blue
 	glVertex2f(300, 500);
@@ -775,8 +749,7 @@ void PS_drawBackground()
 	glEnd();
 }
 
-void PS_drawRoad()
-{
+void PS_drawRoad() {
 	glBegin(GL_POLYGON);
 	glColor3ub(40, 40, 40);
 	glVertex2f(300, 275);
@@ -796,17 +769,12 @@ void PS_drawRoad()
 	glLineWidth(1);
 }
 
-// x values 950, 1300
-// y values 550
-
-void PS_drawOutside()
-{
+void PS_drawOutside() {
 	PS_drawBackground();
 	PS_drawRoad();
 }
 
-void PS_drawKitchenCounter()
-{
+void PS_drawKitchenCounter() {
 	// Kitchen Counter
 	glBegin(GL_POLYGON);
 	glColor3ub(138, 82, 32); //Wood Brown
@@ -817,8 +785,7 @@ void PS_drawKitchenCounter()
 	glEnd();
 }
 
-void PS_drawKitchen()
-{
+void PS_drawKitchen() {
 	glBegin(GL_POLYGON);
 	glColor3ub(247, 239, 187);
 	glVertex2f(950, 550);
@@ -845,8 +812,7 @@ void PS_drawKitchen()
 /*
 *	Scene 5 - Primary School
 */
-void primarySchool()
-{
+void primarySchool() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -866,11 +832,9 @@ void primarySchool()
 }
 
 // Function to Render Scene
-void renderScene(void)
-{
+void renderScene() {
 	// Switch to know which scene is playing
-	switch (SCENE_ID)
-	{
+	switch (SCENE_ID) {
 	case 0:
 		introduction();
 		break;
@@ -898,8 +862,7 @@ void renderScene(void)
 }
 
 // Function to Handle Mouse Clicks
-void mouseClick(int button, int state, int x, int y)
-{
+void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		std::cout << x << "\t" << 800 - y << "\n";
 }
@@ -988,10 +951,8 @@ void update(int) {
 }
 
 // Keyboard Action
-void keyPress(unsigned char key, int x, int y)
-{
-	switch (key)
-	{
+void keyPress(unsigned char key, int x, int y) {
+	switch (key) {
 	// Go to Previous Scene
 	case 'b':
 	case 'B':
@@ -1017,16 +978,14 @@ void keyPress(unsigned char key, int x, int y)
 }
 
 // Function to Initialize Screen
-void initializeScreen(void)
-{
+void initializeScreen() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(0, 1400, 0, 800);
 }
 
 // Main Function
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 	glutInitWindowPosition(0, 0);
