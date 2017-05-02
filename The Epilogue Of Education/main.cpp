@@ -7,7 +7,6 @@
 	#include "GLUT/glut.h"
 #else
 	#include "GL\glut.h"
-#include "main.h"
 #endif
 
 // Define the value of PI, upto 12 decimal places
@@ -76,7 +75,10 @@ void drawCircle(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b, GLfloat r
 }
 
 // Function to Draw a Woman
-void drawWoman(GLfloat tx, GLfloat ty)
+void drawWoman(GLfloat tx, GLfloat ty,
+	GLfloat top_r, GLfloat top_g, GLfloat top_b,
+	GLfloat ribbon_r, GLfloat ribbon_g, GLfloat ribbon_b,
+	GLfloat skirt_r, GLfloat skirt_g, GLfloat skirt_b)
 {
 	glPushMatrix();
 
@@ -120,7 +122,7 @@ void drawWoman(GLfloat tx, GLfloat ty)
 
 	// Top
 	glBegin(GL_POLYGON);
-	glColor3ub(229, 49, 49); // Red
+	glColor3ub(top_r, top_g, top_b);
 	glVertex2f(460, 370);
 	glVertex2f(560, 370);
 	glVertex2f(540, 300);
@@ -129,7 +131,7 @@ void drawWoman(GLfloat tx, GLfloat ty)
 
 	// Skirt
 	glBegin(GL_POLYGON);
-	glColor3ub(229, 49, 49); // Red
+	glColor3ub(skirt_r, skirt_g, skirt_b);
 	glVertex2f(480, 300);
 	glVertex2f(540, 300);
 	glVertex2f(560, 180);
@@ -139,7 +141,7 @@ void drawWoman(GLfloat tx, GLfloat ty)
 	// Ribbon
 	glLineWidth(10);
 	glBegin(GL_LINES);
-	glColor3ub(37, 107, 202); // Blue
+	glColor3ub(ribbon_r, ribbon_g, ribbon_b);
 	glVertex2f(480, 300);
 	glVertex2f(540, 300);
 	glEnd();
@@ -550,7 +552,11 @@ void kindergarten()
 	KG_drawBlackboard();
 
 	// Teacher
-	drawWoman(0, 0);
+	drawWoman(0, 0,
+		229, 49, 49, // top
+		37, 107, 202, // bottom
+		229, 49, 49 // skirt
+	);
 
 	KG_drawTeachersTable();
 
@@ -821,9 +827,13 @@ void PS_drawKitchen()
 	glVertex2f(950, 300);
 	glEnd();
 
-	drawWoman(620, 50);
+	drawWoman(620, 50,
+		229, 49, 49, // top
+		37, 107, 202, // bottom
+		229, 49, 49 // skirt
+	);
 
-	// Hack to Hide Woman's bODY
+	// Hack to Hide Woman's Body
 	glBegin(GL_POLYGON);
 	glColor3ub(164, 191, 203);
 	glVertex2f(1050, 300);
