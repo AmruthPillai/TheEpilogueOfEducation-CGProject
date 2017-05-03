@@ -15,6 +15,8 @@
 // ID to detect which scene the story is in.
 int SCENE_ID;
 
+int sky_r = 12, sky_g = 172, sky_b = 232;
+
 // Variables for Animator Faders
 GLfloat title_fade,
 	intro_next_text_appear, summary_next_text_appear,
@@ -946,7 +948,7 @@ void PS_drawDoor() {
 
 void PS_drawBackground() {
 	glBegin(GL_POLYGON);
-	glColor3ub(12, 172, 232); // Sky Blue
+	glColor3ub(sky_r, sky_g, sky_b); // Sky Blue
 	glVertex2f(300, 500);
 	glVertex2f(500, 500);
 	glColor3ub(82, 163, 42); // Green Grass
@@ -1094,6 +1096,12 @@ void highSchoolTitleScreen() {
 		1, 1, 1, hs_title_fade, 400 - trans_x_title3, 350, .3, .3, 2);
 }
 
+void highSchool() {
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
 // Function to Render Scene
 void renderScene() {
 	// Switch to know which scene is playing
@@ -1118,6 +1126,9 @@ void renderScene() {
 		break;
 	case 6:
 		highSchoolTitleScreen();
+		break;
+	case 7:
+		highSchool();
 		break;
 	default:
 		break;
