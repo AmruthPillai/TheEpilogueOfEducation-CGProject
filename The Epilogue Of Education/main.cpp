@@ -22,13 +22,15 @@ GLfloat title_fade,
 	kg_chap_fade, kg_title_fade,
 	kg_a_fade, kg_apple_fade, kg_b_fade, kg_ball_fade, kg_soon_fade, kg_subtitle_1_appear,
 	ps_chap_fade, ps_title_fade,
-	ps_subtitle_1_appear, ps_subtitle_2_appear;
+	ps_subtitle_1_appear, ps_subtitle_2_appear,
+	hs_chap_fade, hs_title_fade;
 
 // Variables for Translation Animators
 GLfloat trans_x_chap1, trans_x_title1,
 	trans_x_chap2, trans_y_title2,
 	trans_x_kid1, trans_x_kid2, trans_x_kid3, trans_x_ball,
-	trans_subtitle_1_done, trans_subtitle_2_done;
+	trans_subtitle_1_done, trans_subtitle_2_done,
+	trans_x_chap3, trans_x_title3;
 
 // Function to Create Delay
 void delay(float secs) {
@@ -1077,6 +1079,21 @@ void primarySchool() {
 		6);
 }
 
+/*
+*	Scene 6 - High School Title Screen
+*/
+void highSchoolTitleScreen() {
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	// Story Title
+	print("CHAPTER 3",
+		1, 1, 1, hs_chap_fade, 300 + trans_x_chap3, 400, .2, .2, 2);
+	print("High School",
+		1, 1, 1, hs_title_fade, 400 - trans_x_title3, 350, .3, .3, 2);
+}
+
 // Function to Render Scene
 void renderScene() {
 	// Switch to know which scene is playing
@@ -1098,6 +1115,9 @@ void renderScene() {
 		break;
 	case 5:
 		primarySchool();
+		break;
+	case 6:
+		highSchoolTitleScreen();
 		break;
 	default:
 		break;
@@ -1143,7 +1163,7 @@ void update(int) {
 	// Kindergarten Title Screen
 	if (SCENE_ID == 2) {
 		if (trans_x_chap1 < 100)
-			trans_x_chap1 += 1.5;
+			trans_x_chap1 += 1;
 		if (trans_x_title1 < 100)
 			trans_x_title1 += 1;
 
@@ -1178,7 +1198,7 @@ void update(int) {
 	// Primary School Title Screen
 	if (SCENE_ID == 4) {
 		if (trans_x_chap2 < 100)
-			trans_x_chap2 += 1.5;
+			trans_x_chap2 += 1;
 		if (trans_y_title2 < 100)
 			trans_y_title2 += 1;
 
@@ -1212,6 +1232,20 @@ void update(int) {
 			} else
 				trans_subtitle_1_done = 200;
 		}
+	}
+
+	// High School Title Screen
+	if (SCENE_ID == 6) {
+		if (trans_x_chap3 < 100)
+			trans_x_chap3 += 1;
+		if (trans_x_title3 < 100)
+			trans_x_title3 += 1;
+
+		if (hs_chap_fade < 1)
+			hs_chap_fade += .01;
+
+		if (hs_title_fade < 1)
+			hs_title_fade += .01;
 	}
 
 	// Recalls the Display Function
