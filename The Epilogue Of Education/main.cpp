@@ -1096,10 +1096,151 @@ void highSchoolTitleScreen() {
 		1, 1, 1, hs_title_fade, 400 - trans_x_title3, 350, .3, .3, 2);
 }
 
+void HS_drawBackground() {
+	// Background
+	glBegin(GL_POLYGON);
+	glColor3ub(12, 172, 232); // Sky Blue
+	glVertex2f(0, 800);
+	glVertex2f(1400, 800);
+	glVertex2f(1400, 400);
+	glVertex2f(0, 400);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3ub(12, 172, 232); // Sky Blue
+	glVertex2f(0, 400);
+	glVertex2f(1400, 400);
+	glColor3ub(82, 163, 42); // Green Grass
+	glVertex2f(1400, 175);
+	glVertex2f(0, 175);
+	glEnd();
+}
+
+void HS_drawRoad() {
+	// Road
+	glBegin(GL_POLYGON);
+	glColor3ub(40, 40, 40);
+	glVertex2f(0, 175);
+	glVertex2f(1400, 175);
+	glVertex2f(1400, 75);
+	glVertex2f(0, 75);
+	glEnd();
+
+	glLineWidth(2);
+	glBegin(GL_LINES);
+	glColor3ub(255, 255, 255);
+	glVertex2f(0, 125);
+	glVertex2f(200, 125);
+
+	glVertex2f(300, 125);
+	glVertex2f(500, 125);
+
+	glVertex2f(600, 125);
+	glVertex2f(800, 125);
+
+	glVertex2f(900, 125);
+	glVertex2f(1100, 125);
+
+	glVertex2f(1200, 125);
+	glVertex2f(1400, 125);
+	glEnd();
+	glLineWidth(1);
+}
+
+void HS_drawHome() {
+
+	// Home Bottom
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(1375, 175);
+	glVertex2f(1375, 300);
+	glVertex2f(1100, 300);
+	glVertex2f(1100, 175);
+	glEnd();
+
+	// Home Bottom Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1375, 175);
+	glVertex2f(1375, 300);
+	glVertex2f(1100, 300);
+	glVertex2f(1100, 175);
+	glEnd();
+
+	// Home Top Left
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(1100, 300);
+	glVertex2f(1220, 300);
+	glVertex2f(1220, 400);
+	glVertex2f(1100, 400);
+	glEnd();
+
+	// Home Top Left Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1100, 300);
+	glVertex2f(1220, 300);
+	glVertex2f(1220, 400);
+	glVertex2f(1100, 400);
+	glEnd();
+
+	// Triangle Rooftop
+	glBegin(GL_TRIANGLES);
+	glColor3ub(255, 255, 255);
+	glVertex2f(1090, 400);
+	glVertex2f(1230, 400);
+	glVertex2f(1160, 450);
+	glEnd();
+
+	// Triangle Rooftop Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1090, 400);
+	glVertex2f(1230, 400);
+	glVertex2f(1160, 450);
+	glEnd();
+
+	// Home Top Right
+	glBegin(GL_POLYGON);
+	glColor3ub(114, 58, 30);
+	glVertex2f(1220, 375);
+	glVertex2f(1375, 375);
+	glVertex2f(1375, 300);
+	glVertex2f(1220, 300);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3ub(20, 20, 20);
+	for (int temp_x = 1220; temp_x <= 1375; temp_x += 5) {
+		glVertex2f(temp_x, 375);
+		glVertex2f(temp_x, 300);
+	}
+	for (int temp_y = 300; temp_y <= 375; temp_y += 5) {
+		glVertex2f(1220, temp_y);
+		glVertex2f(1375, temp_y);
+	}
+	glEnd();
+
+	// Home Bottom-Top Divider
+	glLineWidth(2);
+	glBegin(GL_LINES);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1090, 300);
+	glVertex2f(1385, 300);
+	glEnd();
+	glLineWidth(1);
+}
+
 void highSchool() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	HS_drawBackground();
+	HS_drawRoad();
+
+	HS_drawHome();
 }
 
 // Function to Render Scene
