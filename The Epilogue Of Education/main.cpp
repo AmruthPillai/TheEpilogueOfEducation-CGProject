@@ -21,11 +21,14 @@ GLfloat title_fade,
 	para1_fade, para2_fade, para3_fade, para4_fade,
 	kg_chap_fade, kg_title_fade,
 	kg_a_fade, kg_apple_fade, kg_b_fade, kg_ball_fade, kg_soon_fade, kg_subtitle_1_appear,
-	ps_chap_fade, ps_title_fade;
+	ps_chap_fade, ps_title_fade,
+	ps_subtitle_1_appear, ps_subtitle_2_appear;
 
 // Variables for Translation Animators
 GLfloat trans_x_chap1, trans_x_title1,
-	trans_x_chap2, trans_y_title2;
+	trans_x_chap2, trans_y_title2,
+	trans_x_kid1, trans_x_kid2, trans_x_kid3, trans_x_ball,
+	trans_subtitle_1_done, trans_subtitle_2_done;
 
 // Function to Create Delay
 void delay(float secs) {
@@ -168,6 +171,7 @@ void drawWoman(GLfloat tx, GLfloat ty, GLfloat sx, GLfloat sy,
 	glVertex2f(522, 398);
 	glVertex2f(518, 395);
 	glEnd();
+	glLineWidth(1);
 
 	// Arms
 	glLineWidth(10);
@@ -329,6 +333,7 @@ void drawKid(GLfloat tx, GLfloat ty,
 	glVertex2f(20, 14);
 	glVertex2f(40, 16);
 	glEnd();
+	glLineWidth(1);
 
 	// Hands
 	drawCircle(-42, -82,
@@ -1009,6 +1014,15 @@ void PS_drawKitchen() {
 	glVertex2f(1200, 140);
 	glVertex2f(1050, 140);
 	glEnd();
+
+	// Kitchen Table
+	glBegin(GL_POLYGON);
+	glColor3ub(138, 82, 32);
+	glVertex2f(950, 300);
+	glVertex2f(1000, 330);
+	glVertex2f(1300, 330);
+	glVertex2f(1300, 300);
+	glEnd();
 }
 /*
 *	Scene 5 - Primary School
@@ -1017,6 +1031,12 @@ void primarySchool() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	print("KID: Mom, can I go out and play football with the other kids?",
+		1, 1, 1, ps_subtitle_1_appear, 300, 30 + trans_subtitle_1_done, .14, .14, 1);
+
+	print("MOM: No, you have to complete your homework first, until then no playing, no TV.",
+		1, 1, 1, ps_subtitle_2_appear, 100, 30 + trans_subtitle_2_done, .14, .14, 1);
 
 	PS_drawCeiling();
 	PS_drawSideWall();
@@ -1036,19 +1056,23 @@ void primarySchool() {
 		1, 1,
 		255, 0, 0);
 
-	drawKid(360, 380,
+	// Back Kid
+	drawKid(360 + trans_x_kid1, 380,
 		-.3, .3,
 		80, 50, 20);
 
-	drawKid(350, 350,
+	// Left Kid
+	drawKid(350 + trans_x_kid2, 350,
 		.3, .3,
 		255, 255, 0);
 
-	drawKid(400, 350,
+	// Right Kid
+	drawKid(400 + trans_x_kid3, 350,
 		-.3, .3,
 		255, 50, 0);
 
-	drawCircle(380, 310,
+	// Ball
+	drawCircle(380 + trans_x_ball, 305,
 		200, 200, 200,
 		6);
 }
@@ -1163,6 +1187,31 @@ void update(int) {
 
 		if (ps_title_fade < 1)
 			ps_title_fade += .01;
+	}
+
+	// Primary School
+	if (SCENE_ID == 5) {
+		if (trans_x_kid1 < 40)
+			trans_x_kid1 += .4;
+
+		if (trans_x_kid2 < 30)
+			trans_x_kid2 += .3;
+
+		if (trans_x_kid3 < 40)
+			trans_x_kid3 += .3;
+
+		if (trans_x_ball < 50)
+			trans_x_ball += .4;
+
+		if (ps_subtitle_1_appear < 1)
+			ps_subtitle_1_appear += .005;
+		else {
+			if (ps_subtitle_2_appear < 1) {
+				trans_subtitle_1_done = 200;
+				ps_subtitle_2_appear += .075;
+			} else
+				trans_subtitle_1_done = 200;
+		}
 	}
 
 	// Recalls the Display Function
