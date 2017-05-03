@@ -54,31 +54,66 @@ void print(char *string,
 }
 
 // Function to Draw Circle
-void drawCircle(GLfloat x, GLfloat y, GLfloat r, GLfloat g, GLfloat b, GLfloat radius) {
-	int triangleAmount = 1000;
-	GLfloat twicePi = 2.0f * PI;
+void drawCircle(GLfloat x, GLfloat y,
+	GLfloat r, GLfloat g, GLfloat b,
+	GLfloat radius) {
+    glBegin(GL_POLYGON);
+		glColor3ub(r, g, b);
+    for (GLfloat i = 0; i < 360; i += 5)
+        glVertex2f(radius * sin(i * PI / 180) + x, radius * cos(i * PI / 180) + y);
+    glEnd();
+}
 
-	glLineWidth(5.0);
+// Function to Draw Circle
+void drawSemiCircle(GLfloat tx, GLfloat ty,
+	GLfloat sx, GLfloat sy,
+	GLfloat r, GLfloat g, GLfloat b,
+	GLfloat radius,
+	GLfloat start_angle, GLfloat end_angle) {
+		glPushMatrix();
 
-	glBegin(GL_LINES);
+		glTranslatef(tx, ty, 0);
+		glScalef(sx, sy, 0);
+
+    glBegin(GL_POLYGON);
+		glColor3ub(r, g, b);
+    for (GLfloat i = start_angle; i < end_angle; i += 5)
+        glVertex2f(radius * sin(i * PI / 180), radius * cos(i * PI / 180));
+    glEnd();
+
+		glPopMatrix();
+}
+
+// Function to Draw Arc
+void drawArc(GLfloat tx, GLfloat ty,
+	GLfloat sx, GLfloat sy,
+	GLfloat r, GLfloat g, GLfloat b) {
+	glPushMatrix();
+
+	glTranslatef(tx, ty, 0);
+	glScalef(sx, sy, 0);
+
+	glPointSize(2);
+	glBegin(GL_POINTS);
 	glColor3ub(r, g, b);
-	for (int i = 0; i <= triangleAmount; i++) {
-		glVertex2f(x, y);
-		glVertex2f(x + (radius * cos(i * twicePi / triangleAmount)), y + (radius * sin(i * twicePi / triangleAmount)));
-	}
-	glEnd();
+  for ( GLfloat i = 90; i < 270; i++)
+    glVertex2f(15 * sin(i * PI / 180), 15 * cos(i * PI / 180));
+  glEnd();
+	glPointSize(1);
 
-	glLineWidth(1.0);
+	glPopMatrix();
 }
 
 // Function to Draw a Woman
-void drawWoman(GLfloat tx, GLfloat ty,
+void drawWoman(GLfloat tx, GLfloat ty, GLfloat sx, GLfloat sy,
+	GLfloat hair_r, GLfloat hair_g, GLfloat hair_b,
 	GLfloat top_r, GLfloat top_g, GLfloat top_b,
 	GLfloat ribbon_r, GLfloat ribbon_g, GLfloat ribbon_b,
 	GLfloat skirt_r, GLfloat skirt_g, GLfloat skirt_b) {
 	glPushMatrix();
 
 	glTranslatef(tx, ty, 0);
+	glScalef(sx, sy, 0);
 
 	// Neck
 	glLineWidth(10);
@@ -95,6 +130,44 @@ void drawWoman(GLfloat tx, GLfloat ty,
 	drawCircle(510, 407,
 		232, 190, 123, // Lighter Skin
 		30);
+
+	// Hair
+	drawSemiCircle(510, 420, 1, .6,
+		hair_r, hair_g, hair_b,
+		35, -90, 90);
+
+	drawSemiCircle(485, 400, .4, 1,
+		hair_r, hair_g, hair_b,
+		35, -180, 0);
+
+	// Left Eye
+	drawCircle(505, 410,
+		250, 250, 250,
+		5);
+	drawCircle(508, 408,
+		10, 10, 10,
+		2.5);
+
+	// Right Eye
+	drawCircle(530, 410,
+		250, 250, 250,
+		5);
+	drawCircle(532, 408,
+		10, 10, 10,
+		2.5);
+
+	// Smile
+	drawArc(514, 388, .5, .3,
+		20, 20, 20);
+
+	// Nose
+	glLineWidth(2);
+	glBegin(GL_LINES);
+	glVertex2f(518, 405);
+	glVertex2f(522, 398);
+	glVertex2f(522, 398);
+	glVertex2f(518, 395);
+	glEnd();
 
 	// Arms
 	glLineWidth(10);
@@ -158,6 +231,104 @@ void drawWoman(GLfloat tx, GLfloat ty,
 	glVertex2f(530, 150);
 	glEnd();
 	glLineWidth(1);
+
+	glPopMatrix();
+}
+
+void drawKidsShirtAndTrousers(GLfloat tx, GLfloat ty,
+	GLfloat sx, GLfloat sy,
+	GLfloat shirt_r, GLfloat shirt_g, GLfloat shirt_b) {
+	glPushMatrix();
+
+	glTranslatef(tx, ty, 0);
+	glScalef(sx, sy, 0);
+
+	// Bottom Shirt
+	glColor3ub(shirt_r, shirt_g, shirt_b);
+	glBegin(GL_POLYGON);
+	glVertex2f(0, 20);
+	glVertex2f(100, 20);
+	glVertex2f(100, 100);
+	glVertex2f(0, 100);
+	glEnd();
+
+	// Top Shirt
+	glBegin(GL_POLYGON);
+	glVertex2f(100, 100);
+	glVertex2f(135, 105);
+	glVertex2f(120, 175);
+	glVertex2f(100, 200);
+	glVertex2f(50, 180);
+	glVertex2f(0, 200);
+	glVertex2f(-20, 175);
+	glVertex2f(-35, 105);
+	glVertex2f(0, 100);
+	glEnd();
+
+	// Left Trouser
+	glColor3ub(37, 107, 202);
+	glBegin(GL_POLYGON);
+	glVertex2f(0, 25);
+	glVertex2f(0, -100);
+	glVertex2f(35, -100);
+	glVertex2f(65, 25);
+	glEnd();
+
+	// Right Trouser
+	glBegin(GL_POLYGON);
+	glVertex2f(35, 25);
+	glVertex2f(65, -100);
+	glVertex2f(100, -100);
+	glVertex2f(100, 25);
+	glEnd();
+
+	glPopMatrix();
+}
+
+
+void drawKid(GLfloat tx, GLfloat ty,
+	GLfloat sx, GLfloat sy) {
+	glPushMatrix();
+
+	glTranslatef(tx, ty, 0);
+	glScalef(sx, sy, 0);
+
+	// Neck
+	drawSemiCircle(-1, -35, .6, 1,
+		203, 166, 108,
+		20, -90, 90);
+
+	// Face
+  drawCircle(0, 0,
+		232, 190, 123,
+		24);
+
+	// Hands
+	drawCircle(-42, -82,
+		232, 190, 123,
+		10);
+	drawCircle(38, -82,
+		232, 190, 123,
+		10);
+
+	// Shirt and Trousers
+	drawKidsShirtAndTrousers(-32, -125,
+		.6, .5,
+		250, 0, 0);
+
+	// Left Shoe
+	drawSemiCircle(-21, -178,
+		1.2, 1,
+		20, 20, 20,
+		10,
+		-90, 90);
+
+	// Right Shoe
+	drawSemiCircle(18, -178,
+		1.2, 1,
+		20, 20, 20,
+		10,
+		-90, 90);
 
 	glPopMatrix();
 }
@@ -535,9 +706,10 @@ void kindergarten() {
 	KG_drawBlackboard();
 
 	// Teacher
-	drawWoman(0, 0,
+	drawWoman(0, 0, 1, 1,
+		60, 60, 60,
 		229, 49, 49, // top
-		37, 107, 202, // bottom
+		37, 107, 202, // ribbon
 		229, 49, 49 // skirt
 	);
 
@@ -794,7 +966,8 @@ void PS_drawKitchen() {
 	glVertex2f(950, 300);
 	glEnd();
 
-	drawWoman(620, 50,
+	drawWoman(620, 50, 1, 1,
+		20, 20, 20,
 		229, 49, 49, // top
 		37, 107, 202, // bottom
 		229, 49, 49 // skirt
@@ -829,6 +1002,9 @@ void primarySchool() {
 
 	PS_drawKitchenWall();
 	PS_drawKitchen();
+
+	drawKid(250, 370,
+		1, 1);
 }
 
 // Function to Render Scene
@@ -848,7 +1024,7 @@ void renderScene() {
 		kindergarten();
 		break;
 	case 4:
-			primarySchoolTitleScreen();
+		primarySchoolTitleScreen();
 		break;
 	case 5:
 		primarySchool();
