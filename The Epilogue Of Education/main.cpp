@@ -287,7 +287,8 @@ void drawKidsShirtAndTrousers(GLfloat tx, GLfloat ty,
 
 
 void drawKid(GLfloat tx, GLfloat ty,
-	GLfloat sx, GLfloat sy) {
+	GLfloat sx, GLfloat sy,
+	GLfloat shirt_r, GLfloat shirt_g, GLfloat shirt_b) {
 	glPushMatrix();
 
 	glTranslatef(tx, ty, 0);
@@ -303,6 +304,32 @@ void drawKid(GLfloat tx, GLfloat ty,
 		232, 190, 123,
 		24);
 
+	// Left Eye
+	drawCircle(-8, 0,
+		250, 250, 250,
+		4);
+	drawCircle(-6, 0,
+		10, 10, 10,
+		2);
+
+	// Right Eye
+	drawCircle(8, 0,
+		250, 250, 250,
+		4);
+	drawCircle(10, 0,
+		10, 10, 10,
+		2);
+
+	// Cap
+	drawSemiCircle(0, 10, 1, 1,
+		37, 107, 202,
+		24, -90, 90);
+	glLineWidth(5);
+	glBegin(GL_LINES);
+	glVertex2f(20, 14);
+	glVertex2f(40, 16);
+	glEnd();
+
 	// Hands
 	drawCircle(-42, -82,
 		232, 190, 123,
@@ -314,7 +341,7 @@ void drawKid(GLfloat tx, GLfloat ty,
 	// Shirt and Trousers
 	drawKidsShirtAndTrousers(-32, -125,
 		.6, .5,
-		250, 0, 0);
+		shirt_r, shirt_g, shirt_b);
 
 	// Left Shoe
 	drawSemiCircle(-21, -178,
@@ -966,7 +993,8 @@ void PS_drawKitchen() {
 	glVertex2f(950, 300);
 	glEnd();
 
-	drawWoman(620, 50, 1, 1,
+	// Mother
+	drawWoman(1630, 50, -1, 1,
 		20, 20, 20,
 		229, 49, 49, // top
 		37, 107, 202, // bottom
@@ -1003,8 +1031,26 @@ void primarySchool() {
 	PS_drawKitchenWall();
 	PS_drawKitchen();
 
+	// Kids inside House
 	drawKid(250, 370,
-		1, 1);
+		1, 1,
+		255, 0, 0);
+
+	drawKid(360, 380,
+		-.3, .3,
+		80, 50, 20);
+
+	drawKid(350, 350,
+		.3, .3,
+		255, 255, 0);
+
+	drawKid(400, 350,
+		-.3, .3,
+		255, 50, 0);
+
+	drawCircle(380, 310,
+		200, 200, 200,
+		6);
 }
 
 // Function to Render Scene
