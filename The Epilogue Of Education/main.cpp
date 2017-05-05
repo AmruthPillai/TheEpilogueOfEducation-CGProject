@@ -1298,16 +1298,16 @@ void update(int) {
 	// Summary
 	if (SCENE_ID == 1) {
 		if (para1_fade < 1)
-			para1_fade += .005;
+			para1_fade += .02;
 		else
 			if (para2_fade < 1)
-				para2_fade += .005;
+				para2_fade += .02;
 			else
 				if (para3_fade < 1)
-					para3_fade += .005;
+					para3_fade += .02;
 				else
 					if (para4_fade < 1)
-						para4_fade += .005;
+						para4_fade += .02;
 					else
 						summary_next_text_appear = 1;
 	}
@@ -1316,32 +1316,33 @@ void update(int) {
 	if (SCENE_ID == 2) {
 		if (trans_x_chap1 < 100)
 			trans_x_chap1 += 1;
+
 		if (trans_x_title1 < 100)
 			trans_x_title1 += 1;
 
 		if (kg_chap_fade < 1)
-			kg_chap_fade += .01;
+			kg_chap_fade += .025;
 
 		if (kg_title_fade < 1)
-			kg_title_fade += .01;
+			kg_title_fade += .025;
 	}
 
 	// Kindergarten
 	if (SCENE_ID == 3) {
 		if (kg_a_fade < 1)
-			kg_a_fade += .01;
+			kg_a_fade += .025;
 			else
 				if (kg_apple_fade < 1)
-					kg_apple_fade += .01;
+					kg_apple_fade += .025;
 				else
 					if (kg_b_fade < 1)
-						kg_b_fade += .01;
+						kg_b_fade += .025;
 					else
 						if (kg_ball_fade < 1)
-							kg_ball_fade += .01;
+							kg_ball_fade += .025;
 						else
 							if (kg_soon_fade < 1)
-								kg_soon_fade += .005;
+								kg_soon_fade += .025;
 							else
 								kg_subtitle_1_appear = 1;
 
@@ -1351,6 +1352,7 @@ void update(int) {
 	if (SCENE_ID == 4) {
 		if (trans_x_chap2 < 100)
 			trans_x_chap2 += 1;
+
 		if (trans_y_title2 < 100)
 			trans_y_title2 += 1;
 
@@ -1380,9 +1382,8 @@ void update(int) {
 		else {
 			if (ps_subtitle_2_appear < 1) {
 				trans_subtitle_1_done = 200;
-				ps_subtitle_2_appear += .075;
-			} else
-				trans_subtitle_1_done = 200;
+				ps_subtitle_2_appear += .005;
+			}
 		}
 	}
 
