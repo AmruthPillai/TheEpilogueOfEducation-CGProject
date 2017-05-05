@@ -13,7 +13,7 @@
 #define PI 3.141592653589
 
 // ID to detect which scene the story is in.
-int SCENE_ID;
+int SCENE_ID = 7;
 
 int sky_r = 12, sky_g = 172, sky_b = 232;
 
@@ -1203,7 +1203,7 @@ void HS_drawHome() {
 
 	// Home Top Right
 	glBegin(GL_POLYGON);
-	glColor3ub(114, 58, 30);
+	glColor3ub(255, 255, 255);
 	glVertex2f(1220, 375);
 	glVertex2f(1375, 375);
 	glVertex2f(1375, 300);
@@ -1230,6 +1230,72 @@ void HS_drawHome() {
 	glVertex2f(1385, 300);
 	glEnd();
 	glLineWidth(1);
+
+	// Door
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(1130, 175);
+	glVertex2f(1130, 280);
+	glVertex2f(1190, 280);
+	glVertex2f(1190, 175);
+	glEnd();
+
+	// Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1130, 175);
+	glVertex2f(1130, 280);
+	glVertex2f(1190, 280);
+	glVertex2f(1190, 175);
+	glEnd();
+
+	// Top Window
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(1130, 330);
+	glVertex2f(1130, 370);
+	glVertex2f(1190, 370);
+	glVertex2f(1190, 330);
+	glEnd();
+
+	// Top Window Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1130, 330);
+	glVertex2f(1130, 370);
+	glVertex2f(1190, 370);
+	glVertex2f(1190, 330);
+	glEnd();
+
+	// Rectangular Window
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(1240, 280);
+	glVertex2f(1240, 240);
+	glEnd();
+
+	// Rectangular Window Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1240, 280);
+	glVertex2f(1240, 240);
+	glVertex2f(1355, 240);
+	glVertex2f(1355, 280);
+	glEnd();
+
+	// Rectangular Window Panes
+	glBegin(GL_LINES);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1297, 280);
+	glVertex2f(1297, 240);
+	glVertex2f(1355, 260);
+	glVertex2f(1240, 260);
+	glEnd();
+
+	// Top Circle
+	drawCircle(1160, 420,
+		20, 20, 20,
+		10);
 }
 
 void highSchool() {
