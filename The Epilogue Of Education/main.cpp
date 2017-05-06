@@ -1116,6 +1116,17 @@ void HS_drawBackground() {
 	glEnd();
 }
 
+bool abc = true;
+GLfloat sun_move_left = 0;
+GLfloat sun_r = 251, sun_g = 255, sun_b = 163;
+
+void HS_drawSun() {
+	// Sun
+	drawCircle(1250 - sun_move_left, 700,
+		sun_r, sun_g, sun_b,
+		50);
+}
+
 void HS_drawRoad() {
 	// Road
 	glBegin(GL_POLYGON);
@@ -1298,15 +1309,58 @@ void HS_drawHome() {
 		10);
 }
 
+void HS_drawSchool() {
+	// School Building
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(400, 175);
+	glVertex2f(1000, 175);
+	glVertex2f(1000, 500);
+	glVertex2f(400, 500);
+	glEnd();
+
+	// School Building Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(400, 175);
+	glVertex2f(1000, 175);
+	glVertex2f(1000, 500);
+	glVertex2f(400, 500);
+	glEnd();
+}
+
+void HS_drawTuition() {
+	// Tuition Building
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(25, 175);
+	glVertex2f(300, 175);
+	glVertex2f(300, 350);
+	glVertex2f(25, 350);
+	glEnd();
+
+	// Tuition Building Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(25, 175);
+	glVertex2f(300, 175);
+	glVertex2f(300, 350);
+	glVertex2f(25, 350);
+	glEnd();
+}
+
 void highSchool() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	HS_drawBackground();
+	HS_drawSun();
 	HS_drawRoad();
 
 	HS_drawHome();
+	HS_drawSchool();
+	HS_drawTuition();
 }
 
 // Function to Render Scene
@@ -1465,6 +1519,25 @@ void update(int) {
 
 		if (hs_title_fade < 1)
 			hs_title_fade += .01;
+	}
+
+	if (SCENE_ID == 7) {
+		if (abc) {
+			delay(3);
+			abc = false;
+		} else {
+			// 32, 34, 96
+			if (sun_r >= 32)
+				sun_r -= 1;
+			else
+				if (sun_g >= 34)
+					sun_g -= 1;
+				else
+					if (sun_b >= 96)
+						sun_b -= 1;
+			if (sun_move_left < 1000)
+				sun_move_left += 2;
+		}
 	}
 
 	// Recalls the Display Function
