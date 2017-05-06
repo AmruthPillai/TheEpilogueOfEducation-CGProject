@@ -15,8 +15,6 @@
 // ID to detect which scene the story is in.
 int SCENE_ID = 7;
 
-int sky_r = 12, sky_g = 172, sky_b = 232;
-
 // Variables for Animator Faders
 GLfloat title_fade,
 	intro_next_text_appear, summary_next_text_appear,
@@ -33,6 +31,9 @@ GLfloat trans_x_chap1, trans_x_title1,
 	trans_x_kid1, trans_x_kid2, trans_x_kid3, trans_x_ball,
 	trans_subtitle_1_done, trans_subtitle_2_done,
 	trans_x_chap3, trans_x_title3;
+
+GLfloat window_top_r = 59, window_top_g = 91, window_top_b = 132,
+	window_bottom_r = 97, window_bottom_g = 131, window_bottom_b = 159;
 
 // Function to Create Delay
 void delay(float secs) {
@@ -948,7 +949,7 @@ void PS_drawDoor() {
 
 void PS_drawBackground() {
 	glBegin(GL_POLYGON);
-	glColor3ub(sky_r, sky_g, sky_b); // Sky Blue
+	glColor3ub(12, 172, 232); // Sky Blue
 	glVertex2f(300, 500);
 	glVertex2f(500, 500);
 	glColor3ub(82, 163, 42); // Green Grass
@@ -1096,10 +1097,16 @@ void highSchoolTitleScreen() {
 		1, 1, 1, hs_title_fade, 400 - trans_x_title3, 350, .3, .3, 2);
 }
 
+bool abc = true;
+GLfloat sun_move_left = 0;
+GLfloat sky_r = 12, sky_g = 172, sky_b = 232;
+GLfloat grass_r = 82, grass_g =  163, grass_b = 42;
+GLfloat sun_r = 251, sun_g = 255, sun_b = 163;
+
 void HS_drawBackground() {
 	// Background
 	glBegin(GL_POLYGON);
-	glColor3ub(12, 172, 232); // Sky Blue
+	glColor3ub(sky_r, sky_g, sky_b); // Sky Blue
 	glVertex2f(0, 800);
 	glVertex2f(1400, 800);
 	glVertex2f(1400, 400);
@@ -1107,18 +1114,14 @@ void HS_drawBackground() {
 	glEnd();
 
 	glBegin(GL_POLYGON);
-	glColor3ub(12, 172, 232); // Sky Blue
+	glColor3ub(sky_r, sky_g, sky_b); // Sky Blue
 	glVertex2f(0, 400);
 	glVertex2f(1400, 400);
-	glColor3ub(82, 163, 42); // Green Grass
+	glColor3ub(grass_r, grass_g, grass_b); // Green Grass
 	glVertex2f(1400, 175);
 	glVertex2f(0, 175);
 	glEnd();
 }
-
-bool abc = true;
-GLfloat sun_move_left = 0;
-GLfloat sun_r = 251, sun_g = 255, sun_b = 163;
 
 void HS_drawSun() {
 	// Sun
@@ -1159,13 +1162,15 @@ void HS_drawRoad() {
 }
 
 void HS_drawHome() {
-
 	// Home Bottom
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(169, 117, 83);
 	glVertex2f(1375, 175);
+	glColor3ub(181, 145, 113);
 	glVertex2f(1375, 300);
+	glColor3ub(181, 145, 113);
 	glVertex2f(1100, 300);
+	glColor3ub(169, 117, 83);
 	glVertex2f(1100, 175);
 	glEnd();
 
@@ -1180,9 +1185,10 @@ void HS_drawHome() {
 
 	// Home Top Left
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(181, 145, 113);
 	glVertex2f(1100, 300);
 	glVertex2f(1220, 300);
+	glColor3ub(169, 117, 83);
 	glVertex2f(1220, 400);
 	glVertex2f(1100, 400);
 	glEnd();
@@ -1198,7 +1204,7 @@ void HS_drawHome() {
 
 	// Triangle Rooftop
 	glBegin(GL_TRIANGLES);
-	glColor3ub(255, 255, 255);
+	glColor3ub(69, 39, 23);
 	glVertex2f(1090, 400);
 	glVertex2f(1230, 400);
 	glVertex2f(1160, 450);
@@ -1214,7 +1220,7 @@ void HS_drawHome() {
 
 	// Home Top Right
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(69, 39, 23);
 	glVertex2f(1220, 375);
 	glVertex2f(1375, 375);
 	glVertex2f(1375, 300);
@@ -1222,7 +1228,7 @@ void HS_drawHome() {
 	glEnd();
 
 	glBegin(GL_LINES);
-	glColor3ub(20, 20, 20);
+	glColor3ub(99, 56, 33);
 	for (int temp_x = 1220; temp_x <= 1375; temp_x += 5) {
 		glVertex2f(temp_x, 375);
 		glVertex2f(temp_x, 300);
@@ -1244,7 +1250,7 @@ void HS_drawHome() {
 
 	// Door
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(31, 47, 53);
 	glVertex2f(1130, 175);
 	glVertex2f(1130, 280);
 	glVertex2f(1190, 280);
@@ -1262,10 +1268,11 @@ void HS_drawHome() {
 
 	// Top Window
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(window_top_r, window_top_g, window_top_b);
 	glVertex2f(1130, 330);
 	glVertex2f(1130, 370);
 	glVertex2f(1190, 370);
+	glColor3ub(window_bottom_r, window_bottom_g, window_bottom_b);
 	glVertex2f(1190, 330);
 	glEnd();
 
@@ -1280,9 +1287,12 @@ void HS_drawHome() {
 
 	// Rectangular Window
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(59, 91, 132);
 	glVertex2f(1240, 280);
 	glVertex2f(1240, 240);
+	glVertex2f(1355, 240);
+	glColor3ub(97, 131, 159);
+	glVertex2f(1355, 280);
 	glEnd();
 
 	// Rectangular Window Border
@@ -1305,17 +1315,18 @@ void HS_drawHome() {
 
 	// Top Circle
 	drawCircle(1160, 420,
-		20, 20, 20,
+		255, 255, 255,
 		10);
 }
 
 void HS_drawSchool() {
 	// School Building
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
-	glVertex2f(400, 175);
+  glColor3ub(184, 88, 68);
+  glVertex2f(400, 175);
 	glVertex2f(1000, 175);
 	glVertex2f(1000, 500);
+	glColor3ub(241, 130, 94);
 	glVertex2f(400, 500);
 	glEnd();
 
@@ -1327,14 +1338,159 @@ void HS_drawSchool() {
 	glVertex2f(1000, 500);
 	glVertex2f(400, 500);
 	glEnd();
+
+	// School Board
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(570, 530);
+	glVertex2f(830, 530);
+	glVertex2f(830, 470);
+	glVertex2f(570, 470);
+	glEnd();
+
+	// School Board Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(570, 530);
+	glVertex2f(830, 530);
+	glVertex2f(830, 470);
+	glVertex2f(570, 470);
+	glEnd();
+
+	print("SCHOOL", 0, 0, 0, 1, 610, 485, .3, .3, 1);
+
+  // School Door
+	glBegin(GL_POLYGON);
+	glColor3ub(183, 184, 188);
+	glVertex2f(600, 175);
+	glVertex2f(600, 280);
+	glVertex2f(800, 280);
+	glVertex2f(800, 175);
+	glEnd();
+
+	// School Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(600, 175);
+	glVertex2f(600, 280);
+	glVertex2f(800, 280);
+	glVertex2f(800, 175);
+	glEnd();
+
+	// School Door Divider
+	glBegin(GL_LINES);
+	glColor3ub(20, 20, 20);
+	glVertex2f(700, 280);
+	glVertex2f(700, 175);
+	glEnd();
+
+	// School Windows
+	for (int i = 0; i <= 500; i+=100) {
+		for (int j = 0; j <= 100; j+=80) {
+			glBegin(GL_POLYGON);
+			glColor3ub(59, 91, 132);
+			glVertex2f(425 + i, 450 - j);
+			glVertex2f(475 + i, 450 - j);
+			glVertex2f(475 + i, 400 - j);
+			glColor3ub(97, 131, 159);
+			glVertex2f(425 + i, 400 - j);
+			glEnd();
+
+			glBegin(GL_LINE_LOOP);
+			glColor3ub(20, 20, 20);
+			glVertex2f(425 + i, 450 - j);
+			glVertex2f(475 + i, 450 - j);
+			glVertex2f(475 + i, 400 - j);
+			glVertex2f(425 + i, 400 - j);
+			glEnd();
+
+			glLineWidth(4);
+			glBegin(GL_LINES);
+			glColor3ub(140, 75, 55);
+			glVertex2f(425 + i, 400 - j);
+			glVertex2f(475 + i, 400 - j);
+			glEnd();
+			glLineWidth(1);
+		}
+	}
+
+	glBegin(GL_POLYGON);
+	glColor3ub(59, 91, 132);
+	glVertex2f(425, 280);
+	glVertex2f(475, 280);
+	glVertex2f(475, 200);
+	glColor3ub(97, 131, 159);
+	glVertex2f(425, 200);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(425, 280);
+	glVertex2f(475, 280);
+	glVertex2f(475, 200);
+	glVertex2f(425, 200);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3ub(59, 91, 132);
+	glVertex2f(525, 280);
+	glVertex2f(575, 280);
+	glVertex2f(575, 200);
+	glColor3ub(97, 131, 159);
+	glVertex2f(525, 200);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(525, 280);
+	glVertex2f(575, 280);
+	glVertex2f(575, 200);
+	glVertex2f(525, 200);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3ub(59, 91, 132);
+	glVertex2f(825, 280);
+	glVertex2f(875, 280);
+	glVertex2f(875, 200);
+	glColor3ub(97, 131, 159);
+	glVertex2f(825, 200);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(825, 280);
+	glVertex2f(875, 280);
+	glVertex2f(875, 200);
+	glVertex2f(825, 200);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3ub(59, 91, 132);
+	glVertex2f(925, 280);
+	glVertex2f(975, 280);
+	glVertex2f(975, 200);
+	glColor3ub(97, 131, 159);
+	glVertex2f(925, 200);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(925, 280);
+	glVertex2f(975, 280);
+	glVertex2f(975, 200);
+	glVertex2f(925, 200);
+	glEnd();
 }
+
 
 void HS_drawTuition() {
 	// Tuition Building
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(151, 188, 207);
 	glVertex2f(25, 175);
 	glVertex2f(300, 175);
+	glColor3ub(144, 180, 200);
 	glVertex2f(300, 350);
 	glVertex2f(25, 350);
 	glEnd();
@@ -1347,6 +1503,123 @@ void HS_drawTuition() {
 	glVertex2f(300, 350);
 	glVertex2f(25, 350);
 	glEnd();
+
+	// Tuition Board
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(50, 375);
+	glVertex2f(180, 375);
+	glVertex2f(180, 325);
+	glVertex2f(50, 325);
+	glEnd();
+
+	// Tuition Board Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(50, 375);
+	glVertex2f(180, 375);
+	glVertex2f(180, 325);
+	glVertex2f(50, 325);
+	glEnd();
+
+	print("TUITION", 0, 0, 0, 1, 58, 342, .15, .15, 1);
+
+	// Tuition Door
+	glBegin(GL_POLYGON);
+	glColor3ub(70, 39, 21);
+	glVertex2f(55, 175);
+	glVertex2f(55, 280);
+	glVertex2f(115, 280);
+	glVertex2f(115, 175);
+	glEnd();
+
+	// Tuition Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(55, 175);
+	glVertex2f(55, 280);
+	glVertex2f(115, 280);
+	glVertex2f(115, 175);
+	glEnd();
+
+	// Tuition Rectangular Window
+	glBegin(GL_POLYGON);
+	glColor3ub(59, 91, 132);
+	glVertex2f(155, 280);
+	glVertex2f(155, 240);
+	glVertex2f(270, 240);
+	glColor3ub(97, 131, 159);
+	glVertex2f(270, 280);
+	glEnd();
+
+	// Tuition Rectangular Window Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(155, 280);
+	glVertex2f(155, 240);
+	glVertex2f(270, 240);
+	glVertex2f(270, 280);
+	glEnd();
+
+	// Tuition Rectangular Window Panes
+	glBegin(GL_LINES);
+	glColor3ub(20, 20, 20);
+	glVertex2f(213, 280);
+	glVertex2f(213, 240);
+	glVertex2f(155, 260);
+	glVertex2f(270, 260);
+	glEnd();
+}
+
+//left Light pole
+void HS_drawLights() {
+	glLineWidth(4);
+	glBegin(GL_LINES);
+	glColor3ub(200, 200, 200);
+	glVertex2f(350, 175);
+	glVertex2f(350, 300);
+	glEnd();
+	glLineWidth(1);
+
+	//right Light pole
+	glLineWidth(4);
+	glBegin(GL_LINES);
+	glColor3ub(200, 200, 200);
+	glVertex2f(1050, 175);
+	glVertex2f(1050, 300);
+	glEnd();
+	glLineWidth(1);
+
+	//left Bulb
+	drawCircle(350,300,
+	window_top_r,window_top_g,window_top_b,
+  15);
+
+	//Right Bulb
+	drawCircle(1050,300,
+	window_top_r,window_top_g,window_top_b,
+  15);
+}
+
+bool sun_has_set = false;
+int star_alpha;
+
+void HS_drawStars() {
+	int no_of_stars = 0;
+
+	while (no_of_stars < 10) {
+		int star_x = 0 + (rand() % (int)(1400 - 0 + 1));
+		int star_y = 530 + (rand() % (int)(800 - 530 + 1));
+
+		glPointSize(2);
+		glBegin(GL_POINTS);
+		glColor4ub(255, 255, 255, star_alpha);
+		glVertex2f(star_x, star_y);
+		glEnd();
+		glPointSize(1);
+
+		no_of_stars++;
+	}
 }
 
 void highSchool() {
@@ -1361,6 +1634,9 @@ void highSchool() {
 	HS_drawHome();
 	HS_drawSchool();
 	HS_drawTuition();
+
+	HS_drawLights();
+	HS_drawStars();
 }
 
 // Function to Render Scene
@@ -1526,17 +1802,48 @@ void update(int) {
 			delay(3);
 			abc = false;
 		} else {
-			// 32, 34, 96
-			if (sun_r >= 32)
-				sun_r -= 1;
+			if (sun_r <= 255)
+				sun_r += .25;
+			if (sun_g <= 255)
+				sun_g += .25;
+			if (sun_b <= 255)
+				sun_b += .25;
+
+			if (star_alpha <= 200)
+				star_alpha += 1;
+
+			if (grass_r <= 255)
+				grass_r += .5;
+			if (grass_g <= 220)
+				grass_g += .5;
+			if (grass_b >= 65)
+				grass_b += .5;
+
+			if (window_top_r <= 255)
+				window_top_r += .25;
+			if (window_top_g <= 220)
+				window_top_g += .25;
+			if (window_top_b >= 65)
+				window_top_b -= .25;
+
+			if (window_bottom_r <= 255)
+				window_bottom_r += .25;
+			if (window_bottom_g <= 220)
+				window_bottom_g += .25;
+			if (window_bottom_b >= 65)
+				window_bottom_b -= .25;
+
+			if (sky_r <= 20)
+				sky_r += .5;
+			if (sky_g >= 20)
+				sky_g -= .5;
+			if (sky_b >= 20)
+				sky_b -= .5;
+
+			if (sun_move_left < 1100)
+				sun_move_left += 1.5;
 			else
-				if (sun_g >= 34)
-					sun_g -= 1;
-				else
-					if (sun_b >= 96)
-						sun_b -= 1;
-			if (sun_move_left < 1000)
-				sun_move_left += 2;
+			sun_has_set = true;
 		}
 	}
 
