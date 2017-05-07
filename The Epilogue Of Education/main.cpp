@@ -1789,7 +1789,7 @@ void PUCTitleScreen() {
 void PUC_drawFloor() {
 	// Floor
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(225, 215, 205);
 	glVertex2f(0, 75);
 	glVertex2f(1400, 75);
 	glVertex2f(775, 200);
@@ -1809,7 +1809,7 @@ void PUC_drawFloor() {
 void PUC_drawCenterWall() {
 	// Center Wall
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(225, 215, 205);
 	glVertex2f(625, 200);
 	glVertex2f(775, 200);
 	glVertex2f(775, 450);
@@ -1824,12 +1824,30 @@ void PUC_drawCenterWall() {
 	glVertex2f(775, 450);
 	glVertex2f(625, 450);
 	glEnd();
+
+	// Center Wall Strip
+	glBegin(GL_POLYGON);
+	glColor3ub(50, 50, 50);
+	glVertex2f(625, 200);
+	glVertex2f(775, 200);
+	glVertex2f(775, 207.81);
+	glVertex2f(625, 207.81);
+	glEnd();
+
+	// Center Wall Strip Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(625, 200);
+	glVertex2f(775, 200);
+	glVertex2f(775, 207.81);
+	glVertex2f(625, 207.81);
+	glEnd();
 }
 
 void PUC_drawCeiling() {
 	// Ceiling
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(238, 229, 219);
 	glVertex2f(625, 450);
 	glVertex2f(775, 450);
 	glVertex2f(1400, 800);
@@ -1849,7 +1867,7 @@ void PUC_drawCeiling() {
 void PUC_drawLeftWall() {
 	// Left Wall
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(210, 193, 179);
 	glVertex2f(0, 75);
 	glVertex2f(625, 200);
 	glVertex2f(625, 450);
@@ -1867,7 +1885,7 @@ void PUC_drawLeftWall() {
 
 	// Left Wall Bottom Strip
 	glBegin(GL_POLYGON);
-	glColor3ub(0, 0, 255);
+	glColor3ub(50, 50, 50);
 	glVertex2f(0, 75);
 	glVertex2f(625, 200);
 	glVertex2f(625, 207.81);
@@ -1887,7 +1905,7 @@ void PUC_drawLeftWall() {
 void PUC_drawRightWall() {
 	// Right Wall
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(210, 193, 179);
 	glVertex2f(775, 200);
 	glVertex2f(1400, 75);
 	glVertex2f(1400, 800);
@@ -1902,16 +1920,188 @@ void PUC_drawRightWall() {
 	glVertex2f(1400, 800);
 	glVertex2f(775, 450);
 	glEnd();
+
+	// Right Wall Bottom Strip
+	glBegin(GL_POLYGON);
+	glColor3ub(50, 50, 50);
+	glVertex2f(1400, 75);
+	glVertex2f(1400, 100);
+	glVertex2f(775, 207.81);
+	glVertex2f(775, 200);
+	glEnd();
+
+	// Right Wall Bottom Strip Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1400, 75);
+	glVertex2f(1400, 100);
+	glVertex2f(775, 207.81);
+	glVertex2f(775, 200);
+	glEnd();
 }
 
 void PUC_drawGuides() {
 	// Guides
 	glBegin(GL_LINES);
 	glColor3ub(20, 20, 20);
+
 	// glVertex2f(625, 325);
 	// glVertex2f(0, 400);
-	glVertex2f(625, 388);
-	glVertex2f(0, 600);
+	//
+	// glVertex2f(625, 388);
+	// glVertex2f(0, 600);
+	//
+	// glVertex2f(775, 388);
+	// glVertex2f(1400, 600);
+
+	glEnd();
+}
+
+void PUC_drawLeftDoors() {
+	// First Door
+	glBegin(GL_POLYGON);
+	glColor3ub(210, 210, 210);
+	glVertex2f(150, 104);
+	glVertex2f(350, 144);
+	glVertex2f(350, 481);
+	glVertex2f(150, 548);
+	glEnd();
+
+	// First Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(150, 104);
+	glVertex2f(350, 144);
+	glVertex2f(350, 481);
+	glVertex2f(150, 548);
+	glEnd();
+
+	// First Wooden Door
+	glBegin(GL_POLYGON);
+	glColor3ub(63, 36, 19);
+	glVertex2f(150, 104);
+	glVertex2f(335, 158);
+	glVertex2f(335, 472);
+	glVertex2f(150, 548);
+	glEnd();
+
+	// First Wooden Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(150, 104);
+	glVertex2f(335, 158);
+	glVertex2f(335, 472);
+	glVertex2f(150, 548);
+	glEnd();
+
+	// Second Door
+	glBegin(GL_POLYGON);
+	glColor3ub(210, 210, 210);
+	glVertex2f(450, 164);
+	glVertex2f(550, 184);
+	glVertex2f(550, 413);
+	glVertex2f(450, 447);
+	glEnd();
+
+	// Second Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(450, 164);
+	glVertex2f(550, 184);
+	glVertex2f(550, 413);
+	glVertex2f(450, 447);
+	glEnd();
+
+	// Second Wooden Door
+	glBegin(GL_POLYGON);
+	glColor3ub(63, 36, 19);
+	glVertex2f(450, 164);
+	glVertex2f(540, 194);
+	glVertex2f(540, 403);
+	glVertex2f(450, 447);
+	glEnd();
+
+	// Second Wooden Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(450, 164);
+	glVertex2f(540, 194);
+	glVertex2f(540, 403);
+	glVertex2f(450, 447);
+	glEnd();
+}
+
+void PUC_drawRightDoors() {
+	// First Door
+	glBegin(GL_POLYGON);
+	glColor3ub(210, 210, 210);
+	glVertex2f(1049, 144);
+	glVertex2f(1250, 104);
+	glVertex2f(1250, 548);
+	glVertex2f(1049, 481);
+	glEnd();
+
+	// First Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1049, 144);
+	glVertex2f(1250, 104);
+	glVertex2f(1250, 548);
+	glVertex2f(1049, 481);
+	glEnd();
+
+	// First Wooden Door
+	glBegin(GL_POLYGON);
+	glColor3ub(63, 36, 19);
+	glVertex2f(1250, 104);
+	glVertex2f(1065, 158);
+	glVertex2f(1065, 472);
+	glVertex2f(1250, 548);
+	glEnd();
+
+	// First Wooden Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(1250, 104);
+	glVertex2f(1065, 158);
+	glVertex2f(1065, 472);
+	glVertex2f(1250, 548);
+	glEnd();
+
+	// Second Door
+	glBegin(GL_POLYGON);
+	glColor3ub(210, 210, 210);
+	glVertex2f(850, 184);
+	glVertex2f(950, 164);
+	glVertex2f(950, 447);
+	glVertex2f(850, 413);
+	glEnd();
+
+	// Second Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(850, 184);
+	glVertex2f(950, 164);
+	glVertex2f(950, 447);
+	glVertex2f(850, 413);
+	glEnd();
+
+	// Second Wooden Door
+	glBegin(GL_POLYGON);
+	glColor3ub(63, 36, 19);
+	glVertex2f(950, 164);
+	glVertex2f(860, 194);
+	glVertex2f(860, 403);
+	glVertex2f(950, 447);
+	glEnd();
+
+	// Second Wooden Door Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(950, 164);
+	glVertex2f(860, 194);
+	glVertex2f(860, 403);
+	glVertex2f(950, 447);
 	glEnd();
 }
 
@@ -1929,6 +2119,9 @@ void PUC() {
 	PUC_drawRightWall();
 
 	PUC_drawGuides();
+
+	PUC_drawLeftDoors();
+	PUC_drawRightDoors();
 }
 
 // Function to Render Scene
