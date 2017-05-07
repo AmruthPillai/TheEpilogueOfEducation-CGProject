@@ -1341,7 +1341,7 @@ void HS_drawSchool() {
 
 	// School Board
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(183, 184, 188);
 	glVertex2f(570, 530);
 	glVertex2f(830, 530);
 	glVertex2f(830, 470);
@@ -1357,7 +1357,7 @@ void HS_drawSchool() {
 	glVertex2f(570, 470);
 	glEnd();
 
-	print("SCHOOL", 0, 0, 0, 1, 610, 485, .3, .3, 1);
+	print("SCHOOL", 0, 0, 0, 1, 610, 485, .3, .3, 1.5);
 
   // School Door
 	glBegin(GL_POLYGON);
@@ -1506,7 +1506,7 @@ void HS_drawTuition() {
 
 	// Tuition Board
 	glBegin(GL_POLYGON);
-	glColor3ub(255, 255, 255);
+	glColor3ub(255, 218, 154);
 	glVertex2f(50, 375);
 	glVertex2f(180, 375);
 	glVertex2f(180, 325);
@@ -1522,7 +1522,7 @@ void HS_drawTuition() {
 	glVertex2f(50, 325);
 	glEnd();
 
-	print("TUITION", 0, 0, 0, 1, 58, 342, .15, .15, 1);
+	print("TUITION", 0, 0, 0, 1, 58, 342, .15, .15, 1.3);
 
 	// Tuition Door
 	glBegin(GL_POLYGON);
@@ -1601,24 +1601,25 @@ void HS_drawLights() {
   15);
 }
 
-bool sun_has_set = false;
-int star_alpha;
+bool sun_has_set = false, stars_are_made = false;
+int star_alpha, no_of_stars, stars_array[40][2];
 
-void HS_drawStars() {
-	int no_of_stars = 0;
-
-	while (no_of_stars < 10) {
-		int star_x = 0 + (rand() % (int)(1400 - 0 + 1));
-		int star_y = 530 + (rand() % (int)(800 - 530 + 1));
-
+void HS_calculateStars() {
+	if (stars_are_made == false) {
+		for (int i = 0, j = 0; i < 40; i++) {
+			stars_array[i][j] = 0 + (rand() % (int)(1400 - 0 + 1));
+			stars_array[i][j+1] = 530 + (rand() % (int)(800 - 530 + 1));
+			no_of_stars++;
+		}
+		stars_are_made = true;
+	} else {
 		glPointSize(2);
 		glBegin(GL_POINTS);
 		glColor4ub(255, 255, 255, star_alpha);
-		glVertex2f(star_x, star_y);
+		for (int i = 0, j = 0; i < no_of_stars; i++)
+			glVertex2f(stars_array[i][j], stars_array[i][j+1]);
 		glEnd();
 		glPointSize(1);
-
-		no_of_stars++;
 	}
 }
 
@@ -1636,7 +1637,7 @@ void highSchool() {
 	HS_drawTuition();
 
 	HS_drawLights();
-	HS_drawStars();
+	HS_calculateStars();
 }
 
 // Function to Render Scene
@@ -1833,11 +1834,11 @@ void update(int) {
 			if (window_bottom_b >= 65)
 				window_bottom_b -= .25;
 
-			if (sky_r <= 20)
+			if (sky_r <= 0)
 				sky_r += .5;
-			if (sky_g >= 20)
+			if (sky_g >= 0)
 				sky_g -= .5;
-			if (sky_b >= 20)
+			if (sky_b >= 0)
 				sky_b -= .5;
 
 			if (sun_move_left < 1100)
