@@ -1123,7 +1123,6 @@ void highSchoolTitleScreen() {
 		1, 1, 1, hs_title_fade, 400 - trans_x_title3, 350, .3, .3, 2);
 }
 
-bool abc = true;
 GLfloat sun_move_left = 0;
 GLfloat sky_r = 12, sky_g = 172, sky_b = 232;
 GLfloat grass_r = 82, grass_g =  163, grass_b = 42;
@@ -1632,7 +1631,7 @@ void HS_drawLights() {
   	15);
 }
 
-bool sun_has_set = false, stars_are_made = false;
+bool sun_moved_half = false, sun_has_set = false, stars_are_made = false;
 int star_alpha, no_of_stars, stars_array[40][2];
 
 void HS_drawStars() {
@@ -1654,13 +1653,11 @@ void HS_drawStars() {
 	}
 }
 
-void HS_drawSchoolBoy(GLfloat tx, GLfloat ty,
-	GLfloat sx, GLfloat sy) {
+void HS_drawSchoolBoy(GLfloat tx, GLfloat ty) {
 		glPushMatrix();
 
-	glScalef(sx, sy, 0);
+	glScalef(.5, .5, 0);
 	glTranslatef(tx, ty, 0);
-
 
 	// Shoes
 	drawSemiCircle(1160, 120,
@@ -1745,9 +1742,12 @@ void HS_drawSchoolBoy(GLfloat tx, GLfloat ty,
 	glPointSize(1);
 
 	glPopMatrix();
-
-
 }
+
+// Global Variables for High School
+bool chapter_1_done, chapter_2_done, chapter_3_done, chapter_4_done, chapter_5_done,
+	tuition_done;
+GLfloat schoolboy_x = 1150, schoolboy_y = 5220;
 
 void highSchool() {
 	// Background
@@ -1764,7 +1764,7 @@ void highSchool() {
 
 	HS_drawLights();
 	HS_drawStars();
-	HS_drawSchoolBoy( 1150,  175, .5, .5);
+	HS_drawSchoolBoy(schoolboy_x, schoolboy_y);
 }
 
 // Function to Render Scene
@@ -1926,10 +1926,22 @@ void update(int) {
 	}
 
 	if (SCENE_ID == 7) {
-		if (abc) {
-			delay(3);
-			abc = false;
-		} else {
+		if (!chapter_1_done) {
+			delay(1);
+			schoolboy_y -= 5000;
+			chapter_1_done = true;
+		}
+
+		if (chapter_1_done && !chapter_2_done) {
+			if (schoolboy_x >= 300) {
+				schoolboy_x -= 5;
+			} else {
+				schoolboy_y += 5000;
+				chapter_2_done = true;
+			}
+		}
+
+		if (chapter_1_done && chapter_2_done && !chapter_3_done && !sun_has_set) {
 			if (sun_r <= 255)
 				sun_r += .25;
 			if (sun_g <= 255)
@@ -1941,11 +1953,11 @@ void update(int) {
 				star_alpha += 1;
 
 			if (grass_r <= 255)
-				grass_r += .5;
+				grass_r += .25;
 			if (grass_g <= 220)
-				grass_g += .5;
+				grass_g += .25;
 			if (grass_b >= 65)
-				grass_b += .5;
+				grass_b += .25;
 
 			if (window_top_r <= 255)
 				window_top_r += .25;
@@ -1962,16 +1974,53 @@ void update(int) {
 				window_bottom_b -= .25;
 
 			if (sky_r <= 0)
-				sky_r += .5;
+				sky_r += .25;
 			if (sky_g >= 0)
-				sky_g -= .5;
+				sky_g -= .25;
 			if (sky_b >= 0)
-				sky_b -= .5;
+				sky_b -= .25;
 
 			if (sun_move_left < 1100)
 				sun_move_left += 1.5;
 			else
-			sun_has_set = true;
+				sun_has_set = true;
+
+			if (sun_move_left > 500)
+				sun_moved_half = true;
+		}
+
+		if (sun_moved_half && !chapter_4_done) {
+			if (schoolboy_y != 220)
+				schoolboy_y -= 5000;
+
+			if (schoolboy_x >= -1000)
+				schoolboy_x -= 5;
+			else {
+				schoolboy_y += 5000;
+				chapter_4_done = true;
+			}
+		}
+
+		if (chapter_4_done) {
+			if (schoolboy_y != 5220 && !tuition_done) {
+				schoolboy_y += 5000;
+				tuition_done = true;
+			}
+		}
+
+		if (sun_has_set) {
+			if (schoolboy_y != 220)
+				schoolboy_y -= 5000;
+			chapter_5_done= true;
+		}
+
+		if (chapter_5_done) {
+			if (schoolboy_x <= 1150)
+				schoolboy_x += 5;
+			else {
+				if (schoolboy_y != 5220)
+					schoolboy_y += 5000;
+			}
 		}
 	}
 
