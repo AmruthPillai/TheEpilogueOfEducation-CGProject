@@ -13,7 +13,7 @@
 #define PI 3.141592653589
 
 // ID to detect which scene the story is in.
-int SCENE_ID = 7;
+int SCENE_ID = 9;
 
 // Variables for Animator Faders
 GLfloat title_fade,
@@ -22,15 +22,18 @@ GLfloat title_fade,
 	kg_chap_fade, kg_title_fade,
 	kg_a_fade, kg_apple_fade, kg_b_fade, kg_ball_fade, kg_soon_fade, kg_subtitle_1_appear,
 	ps_chap_fade, ps_title_fade,
-	ps_subtitle_1_appear, ps_subtitle_2_appear, hs_subtitle_1_appear,
-	hs_chap_fade, hs_title_fade;
+	ps_subtitle_1_appear, ps_subtitle_2_appear,
+	hs_chap_fade, hs_title_fade,
+	hs_subtitle_1_appear,
+	puc_chap_fade, puc_title_fade;
 
 // Variables for Translation Animators
 GLfloat trans_x_chap1, trans_x_title1,
 	trans_x_chap2, trans_y_title2,
 	trans_x_kid1, trans_x_kid2, trans_x_kid3, trans_x_ball,
 	trans_subtitle_1_done, trans_subtitle_2_done,
-	trans_x_chap3, trans_x_title3;
+	trans_x_chap3, trans_x_title3,
+	trans_x_chap4, trans_x_title4;
 
 // Variables for Color Morphers
 GLfloat window_top_r = 59, window_top_g = 91, window_top_b = 132,
@@ -1768,8 +1771,164 @@ void highSchool() {
 
 	print("Home -> School -> Tuition -> Home -> School -> Tuition -> Home -> School -> Tuition",
 		1, 1, 1, hs_subtitle_1_appear, 80, 30, .14, .14, 1);
+}
 
+// Pre University College Title Screen
+void PUCTitleScreen() {
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
 
+	// Story Title
+	print("CHAPTER 4",
+		1, 1, 1, puc_chap_fade, 300, 500 - trans_x_chap4, .2, .2, 2);
+	print("Pre University College",
+		1, 1, 1, puc_title_fade, 400 - trans_x_title4, 450 - trans_x_title4, .3, .3, 2);
+}
+
+void PUC_drawFloor() {
+	// Floor
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(0, 75);
+	glVertex2f(1400, 75);
+	glVertex2f(775, 200);
+	glVertex2f(625, 200);
+	glEnd();
+
+	// Floor Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(0, 75);
+	glVertex2f(1400, 75);
+	glVertex2f(775, 200);
+	glVertex2f(625, 200);
+	glEnd();
+}
+
+void PUC_drawCenterWall() {
+	// Center Wall
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(625, 200);
+	glVertex2f(775, 200);
+	glVertex2f(775, 450);
+	glVertex2f(625, 450);
+	glEnd();
+
+	// Center Wall Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(625, 200);
+	glVertex2f(775, 200);
+	glVertex2f(775, 450);
+	glVertex2f(625, 450);
+	glEnd();
+}
+
+void PUC_drawCeiling() {
+	// Ceiling
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(625, 450);
+	glVertex2f(775, 450);
+	glVertex2f(1400, 800);
+	glVertex2f(0, 800);
+	glEnd();
+
+	// Ceiling Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(625, 450);
+	glVertex2f(775, 450);
+	glVertex2f(1400, 800);
+	glVertex2f(0, 800);
+	glEnd();
+}
+
+void PUC_drawLeftWall() {
+	// Left Wall
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(0, 75);
+	glVertex2f(625, 200);
+	glVertex2f(625, 450);
+	glVertex2f(0, 800);
+	glEnd();
+
+	// Left Wall Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(0, 75);
+	glVertex2f(625, 200);
+	glVertex2f(625, 450);
+	glVertex2f(0, 800);
+	glEnd();
+
+	// Left Wall Bottom Strip
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 0, 255);
+	glVertex2f(0, 75);
+	glVertex2f(625, 200);
+	glVertex2f(625, 207.81);
+	glVertex2f(0, 100);
+	glEnd();
+
+	// Left Wall Bottom Strip Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(0, 75);
+	glVertex2f(625, 200);
+	glVertex2f(625, 207.81);
+	glVertex2f(0, 100);
+	glEnd();
+}
+
+void PUC_drawRightWall() {
+	// Right Wall
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(775, 200);
+	glVertex2f(1400, 75);
+	glVertex2f(1400, 800);
+	glVertex2f(775, 450);
+	glEnd();
+
+	// Right Wall Border
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(20, 20, 20);
+	glVertex2f(775, 200);
+	glVertex2f(1400, 75);
+	glVertex2f(1400, 800);
+	glVertex2f(775, 450);
+	glEnd();
+}
+
+void PUC_drawGuides() {
+	// Guides
+	glBegin(GL_LINES);
+	glColor3ub(20, 20, 20);
+	// glVertex2f(625, 325);
+	// glVertex2f(0, 400);
+	glVertex2f(625, 388);
+	glVertex2f(0, 600);
+	glEnd();
+}
+
+// Pre University College
+void PUC() {
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	PUC_drawFloor();
+	PUC_drawCenterWall();
+	PUC_drawCeiling();
+
+	PUC_drawLeftWall();
+	PUC_drawRightWall();
+
+	PUC_drawGuides();
 }
 
 // Function to Render Scene
@@ -1799,6 +1958,12 @@ void renderScene() {
 		break;
 	case 7:
 		highSchool();
+		break;
+	case 8:
+		PUCTitleScreen();
+		break;
+	case 9:
+		PUC();
 		break;
 	default:
 		break;
@@ -1930,6 +2095,7 @@ void update(int) {
 			hs_title_fade += .01;
 	}
 
+	// High School
 	if (SCENE_ID == 7) {
 		if (!chapter_1_done) {
 			delay(1);
@@ -2031,6 +2197,25 @@ void update(int) {
 				hs_subtitle_1_appear += .005;
 			}
 		}
+	}
+
+	// Pre University College Title Screen
+	if (SCENE_ID == 8) {
+		if (trans_x_chap4 < 100)
+			trans_x_chap4 += 1;
+		if (trans_x_title4 < 100)
+			trans_x_title4 += 1;
+
+		if (puc_chap_fade < 1)
+			puc_chap_fade += .01;
+
+		if (puc_title_fade < 1)
+			puc_title_fade += .01;
+	}
+
+	// Pre University College
+	if (SCENE_ID == 9) {
+
 	}
 
 	// Recalls the Display Function
