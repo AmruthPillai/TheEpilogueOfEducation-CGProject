@@ -32,6 +32,7 @@ GLfloat trans_x_chap1, trans_x_title1,
 	trans_subtitle_1_done, trans_subtitle_2_done,
 	trans_x_chap3, trans_x_title3;
 
+// Variables for Color Morphers
 GLfloat window_top_r = 59, window_top_g = 91, window_top_b = 132,
 	window_bottom_r = 97, window_bottom_g = 131, window_bottom_b = 159;
 
@@ -64,12 +65,20 @@ void print(char *string,
 // Function to Draw Circle
 void drawCircle(GLfloat x, GLfloat y,
 	GLfloat r, GLfloat g, GLfloat b,
+	GLfloat sx, GLfloat sy,
 	GLfloat radius) {
+		glPushMatrix();
+
+		glTranslatef(x, y, 0);
+		glScalef(sx, sy, 0);
+
     glBegin(GL_POLYGON);
 		glColor3ub(r, g, b);
     for (GLfloat i = 0; i < 360; i += 5)
-        glVertex2f(radius * sin(i * PI / 180) + x, radius * cos(i * PI / 180) + y);
+        glVertex2f(radius * sin(i * PI / 180), radius * cos(i * PI / 180));
     glEnd();
+
+		glPopMatrix();
 }
 
 // Function to Draw Circle
@@ -137,6 +146,7 @@ void drawWoman(GLfloat tx, GLfloat ty, GLfloat sx, GLfloat sy,
 	// Face
 	drawCircle(510, 407,
 		232, 190, 123, // Lighter Skin
+		1, 1,
 		30);
 
 	// Hair
@@ -151,17 +161,23 @@ void drawWoman(GLfloat tx, GLfloat ty, GLfloat sx, GLfloat sy,
 	// Left Eye
 	drawCircle(505, 410,
 		250, 250, 250,
+		1, 1,
 		5);
+
 	drawCircle(508, 408,
 		10, 10, 10,
+		1, 1,
 		2.5);
 
 	// Right Eye
 	drawCircle(530, 410,
 		250, 250, 250,
+		1, 1,
 		5);
+
 	drawCircle(532, 408,
 		10, 10, 10,
+		1, 1,
 		2.5);
 
 	// Smile
@@ -311,22 +327,27 @@ void drawKid(GLfloat tx, GLfloat ty,
 	// Face
   drawCircle(0, 0,
 		232, 190, 123,
+		1, 1,
 		24);
 
 	// Left Eye
 	drawCircle(-8, 0,
 		250, 250, 250,
+		1, 1,
 		4);
 	drawCircle(-6, 0,
 		10, 10, 10,
+		1, 1,
 		2);
 
 	// Right Eye
 	drawCircle(8, 0,
 		250, 250, 250,
+		1, 1,
 		4);
 	drawCircle(10, 0,
 		10, 10, 10,
+		1, 1,
 		2);
 
 	// Cap
@@ -343,9 +364,11 @@ void drawKid(GLfloat tx, GLfloat ty,
 	// Hands
 	drawCircle(-42, -82,
 		232, 190, 123,
+		1, 1,
 		10);
 	drawCircle(38, -82,
 		232, 190, 123,
+		1, 1,
 		10);
 
 	// Shirt and Trousers
@@ -569,6 +592,7 @@ void KG_drawDoor() {
 	// Door Knob
 	drawCircle(45, 350,
 		223, 189, 31, // Goldish Yellow
+		1, 1,
 		5);
 }
 
@@ -581,6 +605,7 @@ void KG_drawKidsHead(GLfloat tx, GLfloat ty) {
 	// Kid's Face
 	drawCircle(480, 110,
 		232, 190, 123, // Lighter Skin
+		1, 1,
 		25);
 
 	int hair_line;
@@ -1079,6 +1104,7 @@ void primarySchool() {
 	// Ball
 	drawCircle(380 + trans_x_ball, 305,
 		200, 200, 200,
+		1, 1,
 		6);
 }
 
@@ -1127,6 +1153,7 @@ void HS_drawSun() {
 	// Sun
 	drawCircle(1250 - sun_move_left, 700,
 		sun_r, sun_g, sun_b,
+		1, 1,
 		50);
 }
 
@@ -1316,6 +1343,7 @@ void HS_drawHome() {
 	// Top Circle
 	drawCircle(1160, 420,
 		255, 255, 255,
+		1, 1,
 		10);
 }
 
@@ -1573,6 +1601,7 @@ void HS_drawTuition() {
 
 //left Light pole
 void HS_drawLights() {
+	// Left Light Pole
 	glLineWidth(4);
 	glBegin(GL_LINES);
 	glColor3ub(200, 200, 200);
@@ -1581,7 +1610,7 @@ void HS_drawLights() {
 	glEnd();
 	glLineWidth(1);
 
-	//right Light pole
+	// Right Light Pole
 	glLineWidth(4);
 	glBegin(GL_LINES);
 	glColor3ub(200, 200, 200);
@@ -1590,21 +1619,23 @@ void HS_drawLights() {
 	glEnd();
 	glLineWidth(1);
 
-	//left Bulb
+	// Left Bulb
 	drawCircle(350,300,
-	window_top_r,window_top_g,window_top_b,
-  15);
+		window_top_r, window_top_g, window_top_b,
+		1, 1,
+  	15);
 
-	//Right Bulb
+	// Right Bulb
 	drawCircle(1050,300,
-	window_top_r,window_top_g,window_top_b,
-  15);
+		window_top_r, window_top_g, window_top_b,
+		1, 1,
+  	15);
 }
 
 bool sun_has_set = false, stars_are_made = false;
 int star_alpha, no_of_stars, stars_array[40][2];
 
-void HS_calculateStars() {
+void HS_drawStars() {
 	if (stars_are_made == false) {
 		for (int i = 0, j = 0; i < 40; i++) {
 			stars_array[i][j] = 0 + (rand() % (int)(1400 - 0 + 1));
@@ -1623,6 +1654,101 @@ void HS_calculateStars() {
 	}
 }
 
+void HS_drawSchoolBoy(GLfloat tx, GLfloat ty,
+	GLfloat sx, GLfloat sy) {
+		glPushMatrix();
+
+	glScalef(sx, sy, 0);
+	glTranslatef(tx, ty, 0);
+
+
+	// Shoes
+	drawSemiCircle(1160, 120,
+		1, 1,
+		255, 255, 255,
+		10,
+		-90, 91);
+
+	// Shoe Extension
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(1160, 120);
+	glVertex2f(1170, 120);
+	glVertex2f(1170, 135);
+	glVertex2f(1160, 135);
+	glEnd();
+
+	// Pants
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 0, 200);
+	glVertex2f(1158, 135);
+	glVertex2f(1172, 135);
+	glVertex2f(1170, 190);
+	glVertex2f(1160, 190);
+	glEnd();
+
+	// Shirt
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 0, 0);
+	glVertex2f(1155, 190);
+	glVertex2f(1170, 190);
+	glVertex2f(1170, 260);
+	glVertex2f(1160, 260);
+	glEnd();
+
+	// Bag
+	glBegin(GL_POLYGON);
+	glColor3ub(156, 86, 47);
+	glVertex2f(1170, 250);
+	glVertex2f(1180, 245);
+	glVertex2f(1185, 200);
+	glVertex2f(1170, 195);
+	glEnd();
+
+	// Head
+	drawCircle(1164, 273,
+	232, 190, 123,
+	1, 1.4,
+	12);
+
+	// Hair
+	drawSemiCircle(1167, 277,
+	1, 1,
+	0, 0, 0,
+  14,
+	-80, 180);
+
+	// Nose
+	glBegin(GL_TRIANGLES);
+	glColor3ub(232, 190, 123);
+	glVertex2f(1155, 270);
+	glVertex2f(1152, 260);
+	glVertex2f(1157, 262);
+	glEnd();
+
+	// Eye
+	glPointSize(2);
+	glBegin(GL_POINTS);
+	glColor3ub(0, 0, 0);
+	glVertex2f(1156, 270);
+	glEnd();
+	glPointSize(1);
+
+	// Lips
+	glPointSize(1);
+	glBegin(GL_POINTS);
+	glColor3ub(0, 0, 0);
+	glVertex2f(1158, 256);
+	glVertex2f(1159, 257);
+	glVertex2f(1160, 258);
+	glEnd();
+	glPointSize(1);
+
+	glPopMatrix();
+
+
+}
+
 void highSchool() {
 	// Background
 	glClearColor(0.05, 0.05, 0.05, 1.0);
@@ -1637,7 +1763,8 @@ void highSchool() {
 	HS_drawTuition();
 
 	HS_drawLights();
-	HS_calculateStars();
+	HS_drawStars();
+	HS_drawSchoolBoy( 1150,  175, .5, .5);
 }
 
 // Function to Render Scene
