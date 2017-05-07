@@ -22,7 +22,7 @@ GLfloat title_fade,
 	kg_chap_fade, kg_title_fade,
 	kg_a_fade, kg_apple_fade, kg_b_fade, kg_ball_fade, kg_soon_fade, kg_subtitle_1_appear,
 	ps_chap_fade, ps_title_fade,
-	ps_subtitle_1_appear, ps_subtitle_2_appear,
+	ps_subtitle_1_appear, ps_subtitle_2_appear, hs_subtitle_1_appear,
 	hs_chap_fade, hs_title_fade;
 
 // Variables for Translation Animators
@@ -1765,6 +1765,11 @@ void highSchool() {
 	HS_drawLights();
 	HS_drawStars();
 	HS_drawSchoolBoy(schoolboy_x, schoolboy_y);
+
+	print("Home -> School -> Tuition -> Home -> School -> Tuition -> Home -> School -> Tuition",
+		1, 1, 1, hs_subtitle_1_appear, 80, 30, .14, .14, 1);
+
+
 }
 
 // Function to Render Scene
@@ -2020,6 +2025,10 @@ void update(int) {
 			else {
 				if (schoolboy_y != 5220)
 					schoolboy_y += 5000;
+			}
+
+			if (hs_subtitle_1_appear < 1) {
+				hs_subtitle_1_appear += .005;
 			}
 		}
 	}
