@@ -34,11 +34,25 @@ GLfloat trans_x_chap1, trans_x_title1,
 	trans_x_kid1, trans_x_kid2, trans_x_kid3, trans_x_ball,
 	trans_subtitle_1_done, trans_subtitle_2_done,
 	trans_x_chap3, trans_x_title3,
-	trans_x_chap4, trans_x_title4;
+	trans_x_chap4, trans_x_title4,
+	sun_move_left,
+	schoolboy_x = 1150, schoolboy_y = 5220,
+	trans_x_sb1 = -630, trans_y_sb1 = -50, trans_x_sb2 = -1630, trans_y_sb2 = -50;
 
 // Variables for Color Morphers
 GLfloat window_top_r = 59, window_top_g = 91, window_top_b = 132,
-	window_bottom_r = 97, window_bottom_g = 131, window_bottom_b = 159;
+	window_bottom_r = 97, window_bottom_g = 131, window_bottom_b = 159,
+	sky_r = 12, sky_g = 172, sky_b = 232,
+	grass_r = 82, grass_g =  163, grass_b = 42,
+	sun_r = 251, sun_g = 255, sun_b = 163;
+
+// Variables for Turn-based Switching
+bool sun_moved_half, sun_has_set, stars_are_made,
+	chapter_1_done, chapter_2_done, chapter_3_done, chapter_4_done, chapter_5_done, tuition_done,
+	puc_begin_anim, puc_end_anim;
+
+// Variables for Random Star Generation
+int star_alpha, no_of_stars, stars_array[40][2];
 
 // Function to Create Delay
 void delay(float secs) {
@@ -318,7 +332,6 @@ void drawKidsShirtAndTrousers(GLfloat tx, GLfloat ty,
 	glPopMatrix();
 }
 
-
 void drawKid(GLfloat tx, GLfloat ty,
 	GLfloat sx, GLfloat sy,
 	GLfloat shirt_r, GLfloat shirt_g, GLfloat shirt_b) {
@@ -442,7 +455,7 @@ void summary() {
 
 	print("When we grow up, things don't change. We are given a meagre choice of either choosing",
 		1, 1, 1, para2_fade, 75, 475, .125, .125, 1.25);
-	print("to be a Doctor or an Engineer, and the rest of the options are at bleak focus. ",
+	print("to be a Doctor or an Engineer, and the rest` of the options are at bleak focus. ",
 		1, 1, 1, para2_fade, 75, 450, .125, .125, 1.25);
 
 	print("Choosing to be a doctor is a rich man's dream.",
@@ -1131,11 +1144,6 @@ void highSchoolTitleScreen() {
 		1, 1, 1, hs_title_fade, 400 - trans_x_title3, 350, .3, .3, 2);
 }
 
-GLfloat sun_move_left = 0;
-GLfloat sky_r = 12, sky_g = 172, sky_b = 232;
-GLfloat grass_r = 82, grass_g =  163, grass_b = 42;
-GLfloat sun_r = 251, sun_g = 255, sun_b = 163;
-
 void HS_drawBackground() {
 	// Background
 	glBegin(GL_POLYGON);
@@ -1518,7 +1526,6 @@ void HS_drawSchool() {
 	glEnd();
 }
 
-
 void HS_drawTuition() {
 	// Tuition Building
 	glBegin(GL_POLYGON);
@@ -1606,7 +1613,6 @@ void HS_drawTuition() {
 	glEnd();
 }
 
-//left Light pole
 void HS_drawLights() {
 	// Left Light Pole
 	glLineWidth(4);
@@ -1638,9 +1644,6 @@ void HS_drawLights() {
 		1, 1,
   	15);
 }
-
-bool sun_moved_half = false, sun_has_set = false, stars_are_made = false;
-int star_alpha, no_of_stars, stars_array[40][2];
 
 void HS_drawStars() {
 	if (stars_are_made == false) {
@@ -1714,16 +1717,16 @@ void drawSchoolBoy(GLfloat tx, GLfloat ty,
 
 	// Head
 	drawCircle(1164, 273,
-	232, 190, 123,
-	1, 1.4,
-	12);
+		232, 190, 123,
+		1, 1.4,
+		12);
 
 	// Hair
 	drawSemiCircle(1167, 277,
-	1, 1,
-	0, 0, 0,
-  14,
-	-80, 180);
+		1, 1,
+		0, 0, 0,
+	  14,
+		-80, 180);
 
 	// Nose
 	glBegin(GL_TRIANGLES);
@@ -1753,11 +1756,6 @@ void drawSchoolBoy(GLfloat tx, GLfloat ty,
 
 	glPopMatrix();
 }
-
-// Global Variables for High School
-bool chapter_1_done, chapter_2_done, chapter_3_done, chapter_4_done, chapter_5_done,
-	tuition_done;
-GLfloat schoolboy_x = 1150, schoolboy_y = 5220;
 
 void highSchool() {
 	// Background
@@ -1949,23 +1947,6 @@ void PUC_drawRightWall() {
 	glVertex2f(1400, 100);
 	glVertex2f(775, 207.81);
 	glVertex2f(775, 200);
-	glEnd();
-}
-
-void PUC_drawGuides() {
-	// Guides
-	glBegin(GL_LINES);
-	glColor3ub(20, 20, 20);
-
-	// glVertex2f(625, 325);
-	// glVertex2f(0, 400);
-	//
-	// glVertex2f(625, 388);
-	// glVertex2f(0, 600);
-	//
-	// glVertex2f(775, 388);
-	// glVertex2f(1400, 600);
-
 	glEnd();
 }
 
@@ -2259,9 +2240,8 @@ void PUC_drawRightDoors() {
 		3);
 }
 
-void PUC_drawBoard(){
-
-	//Board Hanging Line
+void PUC_drawBoard() {
+	// Board Hanging Line
 	glLineWidth(4);
 	glBegin(GL_LINES);
 	glColor3ub(20, 20, 20);
@@ -2281,7 +2261,7 @@ void PUC_drawBoard(){
 	glVertex2f(950, 750);
 	glEnd();
 
-	//Board
+	// Board
 	glBegin(GL_POLYGON);
 	glColor3ub(0, 131, 255);
 	glVertex2f(452, 748);
@@ -2302,11 +2282,6 @@ void PUC_drawBoard(){
 		1, 1, 1, 1, 650, 630, .12, .12, 1);
 }
 
-// Variables for PUC Animation
-bool puc_begin_anim, puc_end_anim;
-GLfloat trans_x_sb1 = -630, trans_y_sb1 = -50,
-	trans_x_sb2 = -1630, trans_y_sb2 = -50;
-
 // Pre University College
 void PUC() {
 	// Background
@@ -2319,8 +2294,6 @@ void PUC() {
 
 	PUC_drawLeftWall();
 	PUC_drawRightWall();
-
-	PUC_drawGuides();
 
 	PUC_drawLeftDoors();
 	PUC_drawRightDoors();
