@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 #include <time.h>
 #include <math.h>
 
@@ -13,7 +14,7 @@
 #define PI 3.141592653589
 
 // ID to detect which scene the story is in.
-int SCENE_ID;
+int SCENE_ID = 11;
 
 // Variables for Animator Faders
 GLfloat title_fade,
@@ -27,7 +28,8 @@ GLfloat title_fade,
 	hs_subtitle_1_appear,
 	puc_chap_fade, puc_title_fade,
 	puc_subtitle_1_fade,
-	eng_chap_fade, eng_title_fade;
+	eng_chap_fade, eng_title_fade,
+	ec_subtitle_1_fade;
 
 // Variables for Translation Animators
 GLfloat trans_x_chap1, trans_x_title1,
@@ -39,7 +41,8 @@ GLfloat trans_x_chap1, trans_x_title1,
 	sun_move_left,
 	schoolboy_x = 1150, schoolboy_y = 5220,
 	trans_x_sb1 = -630, trans_y_sb1 = -50, trans_x_sb2 = -1630, trans_y_sb2 = -50,
-	trans_x_chap5, trans_x_title5;
+	trans_x_chap5, trans_x_title5,
+	trans_x_ec_sb1 = 850, trans_x_ec_sb2 = -1000, trans_y_ec_sb = 40, trans_x_ec_gb = -180, trans_y_ec_gb = 1040;
 
 // Variables for Color Morphers
 GLfloat window_top_r = 59, window_top_g = 91, window_top_b = 132,
@@ -51,7 +54,8 @@ GLfloat window_top_r = 59, window_top_g = 91, window_top_b = 132,
 // Variables for Turn-based Switching
 bool sun_moved_half, sun_has_set, stars_are_made,
 	chapter_1_done, chapter_2_done, chapter_3_done, chapter_4_done, chapter_5_done, tuition_done,
-	puc_begin_anim, puc_end_anim;
+	puc_begin_anim, puc_end_anim,
+	ec_graduation_done;
 
 // Variables for Random Star Generation
 int star_alpha, no_of_stars, stars_array[40][2];
@@ -412,6 +416,36 @@ void drawKid(GLfloat tx, GLfloat ty,
 		20, 20, 20,
 		10,
 		-90, 90);
+
+	glPopMatrix();
+}
+
+void drawTree(GLfloat tx, GLfloat ty,
+	GLfloat sx, GLfloat sy) {
+	glPushMatrix();
+
+	glTranslatef(tx, ty, 0);
+	glScalef(sx, sy, 0);
+
+	// Bark
+	glBegin(GL_POLYGON);
+	glColor3ub(86, 46, 11);
+	glVertex2f(0, 0);
+	glVertex2f(40, 0);
+	glColor3ub(71, 36, 6);
+	glVertex2f(35, 200);
+	glVertex2f(5, 200);
+	glEnd();
+
+	// Tree
+	drawCircle(20, 200, 5, 80, 10, 1, 1, 80);
+
+	// Apples
+	drawCircle(27, 194, 255, 0, 0, 1, 1.2, 5);
+	drawCircle(-15, 170, 255, 0, 0, 1, 1.2, 5);
+	drawCircle(47, 155, 255, 0, 0, 1, 1.2, 5);
+	drawCircle(-2, 228, 255, 0, 0, 1, 1.2, 5);
+	drawCircle(72, 216, 255, 0, 0, 1, 1.2, 5);
 
 	glPopMatrix();
 }
@@ -2328,6 +2362,505 @@ void engineeringCollegeTitleScreen() {
 		1, 1, 1, eng_title_fade, 400 - trans_x_title5, 350, .3, .3, 2);
 }
 
+void drawGraduatedBoy(GLfloat tx, GLfloat ty,
+	GLfloat sx, GLfloat sy,
+	GLfloat shirt_r, GLfloat shirt_g, GLfloat shirt_b) {
+	glPushMatrix();
+
+	glScalef(sx, sy, 0);
+	glTranslatef(tx, ty, 0);
+
+	// Shoes
+	drawSemiCircle(1160, 120,
+		1, 1,
+		255, 255, 255,
+		10,
+		-90, 91);
+
+	// Shoe Extension
+	glBegin(GL_POLYGON);
+	glColor3ub(255, 255, 255);
+	glVertex2f(1160, 120);
+	glVertex2f(1170, 120);
+	glVertex2f(1170, 135);
+	glVertex2f(1160, 135);
+	glEnd();
+
+	// Pants
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 0, 200);
+	glVertex2f(1158, 135);
+	glVertex2f(1172, 135);
+	glVertex2f(1170, 190);
+	glVertex2f(1160, 190);
+	glEnd();
+
+	// Shirt
+	glBegin(GL_POLYGON);
+	glColor3ub(shirt_r, shirt_g, shirt_b);
+	glVertex2f(1155, 190);
+	glVertex2f(1170, 190);
+	glVertex2f(1170, 260);
+	glVertex2f(1160, 260);
+	glEnd();
+
+	// Bag
+	glBegin(GL_POLYGON);
+	glColor3ub(156, 86, 47);
+	glVertex2f(1170, 250);
+	glVertex2f(1180, 245);
+	glVertex2f(1185, 200);
+	glVertex2f(1170, 195);
+	glEnd();
+
+	// Head
+	drawCircle(1164, 273,
+		232, 190, 123,
+		1, 1.4,
+		12);
+
+	// Hair
+	drawSemiCircle(1167, 277,
+		1, 1,
+		0, 0, 0,
+	  14,
+		-80, 180);
+
+	// Graduation Cap
+	glBegin(GL_POLYGON);
+	glColor3ub(50, 50, 50); // Barely Black
+	glVertex2f(1144, 282);
+	glVertex2f(1190, 268);
+	glVertex2f(1189, 285);
+	glVertex2f(1165, 297);
+	glEnd();
+
+	// Graduation Cap Thread
+	glLineWidth(2);
+	glBegin(GL_LINE_STRIP);
+	glColor3ub(240, 240, 40);
+	glVertex2f(1173, 281);
+	glVertex2f(1186, 272);
+	glVertex2f(1190, 258);
+	glEnd();
+	glLineWidth(1);
+	drawCircle(1190, 258,
+		240, 240, 40,
+		1, 1.2,
+		3);
+
+	// Nose
+	glBegin(GL_TRIANGLES);
+	glColor3ub(232, 190, 123);
+	glVertex2f(1155, 270);
+	glVertex2f(1152, 260);
+	glVertex2f(1157, 262);
+	glEnd();
+
+	// Eye
+	glPointSize(2);
+	glBegin(GL_POINTS);
+	glColor3ub(0, 0, 0);
+	glVertex2f(1156, 270);
+	glEnd();
+	glPointSize(1);
+
+	// Lips
+	glPointSize(1);
+	glBegin(GL_POINTS);
+	glColor3ub(0, 0, 0);
+	glVertex2f(1158, 256);
+	glVertex2f(1159, 257);
+	glVertex2f(1160, 258);
+	glEnd();
+	glPointSize(1);
+
+	glPopMatrix();
+}
+
+void EC_drawBackground() {
+	// Background
+	glBegin(GL_POLYGON);
+	glColor3ub(12, 172, 232); // Sky Blue
+	glVertex2f(0, 800);
+	glVertex2f(1400, 800);
+	glVertex2f(1400, 400);
+	glVertex2f(0, 400);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3ub(12, 172, 232); // Sky Blue
+	glVertex2f(0, 400);
+	glVertex2f(1400, 400);
+	glColor3ub(82, 163, 42); // Green Grass
+	glVertex2f(1400, 125);
+	glVertex2f(0, 125);
+	glEnd();
+}
+
+void EC_drawRoad() {
+	glBegin(GL_POLYGON);
+	glColor3ub(40, 40, 40);
+	glVertex2f(0, 75);
+	glVertex2f(1400, 75);
+	glVertex2f(1400, 125);
+	glVertex2f(0, 125);
+	glEnd();
+
+	glLineWidth(2);
+	glBegin(GL_LINES);
+	glColor3ub(255, 255, 255);
+	glVertex2f(0, 100);
+	glVertex2f(100, 100);
+
+	glVertex2f(120, 100);
+	glVertex2f(220, 100);
+
+	glVertex2f(240, 100);
+	glVertex2f(340, 100);
+
+	glVertex2f(360, 100);
+	glVertex2f(460, 100);
+
+	glVertex2f(480, 100);
+  glVertex2f(580, 100);
+
+	glVertex2f(600, 100);
+	glVertex2f(700, 100);
+
+	glVertex2f(720, 100);
+	glVertex2f(820, 100);
+
+	glVertex2f(840, 100);
+	glVertex2f(940, 100);
+
+	glVertex2f(960, 100);
+	glVertex2f(1060, 100);
+
+	glVertex2f(1080, 100);
+	glVertex2f(1180, 100);
+
+	glVertex2f(1200, 100);
+	glVertex2f(1300, 100);
+
+	glVertex2f(1320, 100);
+	glVertex2f(1420, 100);
+
+	glEnd();
+	glLineWidth(1);
+}
+
+void EC_drawFrontFacingBuilding() {
+	// Front Facing Building
+	glBegin(GL_POLYGON);
+	glColor3ub(30, 120, 182);
+	glVertex2f(550, 125);
+	glColor3ub(4, 36, 86);
+	glVertex2f(850, 125);
+	glColor3ub(0, 22, 52);
+	glVertex2f(850, 650);
+	glColor3ub(2, 36, 80);
+	glVertex2f(550, 650);
+	glEnd();
+
+	// Front Facing Building Mesh
+	glBegin(GL_LINES);
+	glColor3ub(0, 30, 60);
+
+	// Vertical Lines - 4
+	glVertex2f(550, 650);
+	glVertex2f(550, 125);
+
+	glVertex2f(625, 650);
+	glVertex2f(625, 125);
+
+	glVertex2f(700, 650);
+	glVertex2f(700, 125);
+
+	glVertex2f(775, 650);
+	glVertex2f(775, 125);
+
+	glVertex2f(850, 650);
+	glVertex2f(850, 125);
+
+	// Horizontal Lines - 10
+	glVertex2f(550, 125);
+	glVertex2f(850, 125);
+
+	glVertex2f(550, 177.5);
+	glVertex2f(850, 177.5);
+
+	glVertex2f(550, 230);
+	glVertex2f(850, 230);
+
+	glVertex2f(550, 282.5);
+	glVertex2f(850, 282.5);
+
+	glVertex2f(550, 335);
+	glVertex2f(850, 335);
+
+	glVertex2f(550, 387.5);
+	glVertex2f(850, 387.5);
+
+	glVertex2f(550, 440);
+	glVertex2f(850, 440);
+
+	glVertex2f(550, 492.5);
+	glVertex2f(850, 492.5);
+
+	glVertex2f(550, 545);
+	glVertex2f(850, 545);
+
+	glVertex2f(550, 598);
+	glVertex2f(850, 598);
+
+	glVertex2f(550, 650);
+	glVertex2f(850, 650);
+	glEnd();
+
+	// Door
+	glBegin(GL_POLYGON);
+	glColor3ub(23, 99, 152);
+	glVertex2f(626, 125);
+	glColor3ub(11, 57, 110);
+	glVertex2f(774, 125);
+	glColor3ub(8, 49, 92);
+	glVertex2f(774, 282);
+	glColor3ub(21, 99, 144);
+	glVertex2f(626, 282);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3ub(0, 30, 60);
+	glVertex2f(700, 282);
+	glVertex2f(700, 125);
+	glEnd();
+
+	drawCircle(690, 206, 240, 240, 240, 1, 1, 3);
+	drawCircle(690, 202, 240, 240, 240, 1, 1, 3);
+	drawCircle(690, 198, 240, 240, 240, 1, 1, 3);
+
+	drawCircle(710, 206, 240, 240, 240, 1, 1, 3);
+	drawCircle(710, 202, 240, 240, 240, 1, 1, 3);
+	drawCircle(710, 198, 240, 240, 240, 1, 1, 3);
+}
+
+void EC_drawLeftWing() {
+	// Left Wing
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 30, 60);
+	glVertex2f(500, 125);
+	glVertex2f(550, 125);
+	glVertex2f(550, 598);
+	glVertex2f(500, 598);
+	glEnd();
+
+	// Left Building
+	glBegin(GL_POLYGON);
+	glColor3ub(30, 120, 182);
+	glVertex2f(200, 184);
+	glColor3ub(4, 36, 86);
+	glVertex2f(500, 125);
+	glColor3ub(0, 22, 52);
+	glVertex2f(500, 598);
+	glColor3ub(2, 36, 80);
+	glVertex2f(200, 539);
+	glEnd();
+
+	// Left Building
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 30, 60);
+	glVertex2f(200, 184);
+	glVertex2f(500, 125);
+	glVertex2f(500, 598);
+	glVertex2f(200, 539);
+	glEnd();
+
+	// Windows Edges
+	glBegin(GL_LINES);
+	glColor3ub(0, 30, 60);
+	glVertex2f(500, 125);
+	glVertex2f(500, 598);
+
+	glVertex2f(400, 144);
+	glVertex2f(400, 576);
+
+	glVertex2f(300, 164);
+	glVertex2f(300, 556);
+
+	glVertex2f(200, 184);
+	glVertex2f(200, 539);
+	glEnd();
+}
+
+void EC_drawRightWing() {
+	// Right Wing
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 30, 60);
+	glVertex2f(850, 125);
+	glVertex2f(900, 125);
+	glVertex2f(900, 598);
+	glVertex2f(850, 598);
+	glEnd();
+
+	// Right Building
+	glBegin(GL_POLYGON);
+	glColor3ub(4, 36, 86);
+	glVertex2f(900, 125);
+	glColor3ub(30, 120, 182);
+	glVertex2f(1200, 184);
+	glColor3ub(2, 36, 80);
+	glVertex2f(1200, 539);
+	glColor3ub(0, 22, 52);
+	glVertex2f(900, 598);
+	glEnd();
+
+	// Right Building
+	glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 30, 60);
+	glVertex2f(900, 125);
+	glVertex2f(1200, 184);
+	glVertex2f(1200, 539);
+	glVertex2f(900, 598);
+	glEnd();
+
+	// Windows Edges
+	glBegin(GL_LINES);
+	glColor3ub(0, 30, 60);
+	glVertex2f(900, 125);
+	glVertex2f(900, 598);
+
+	glVertex2f(1000, 144);
+	glVertex2f(1000, 576);
+
+	glVertex2f(1100, 164);
+	glVertex2f(1100, 556);
+
+	glVertex2f(1200, 184);
+	glVertex2f(1200, 539);
+	glEnd();
+}
+
+void EC_drawTrees() {
+	// Left Trees
+	drawTree(430, 130, .5, .5);
+	drawTree(360, 140, .48, .48);
+	drawTree(290, 150, .46, .46);
+	drawTree(220, 160, .44, .44);
+
+	// Right Trees
+	drawTree(940, 130, .5, .5);
+	drawTree(1010, 140, .48, .48);
+	drawTree(1080, 150, .46, .46);
+	drawTree(1150, 160, .44, .44);
+}
+
+void EC_drawBoys() {
+	// Red Boy
+	drawSchoolBoy(trans_x_ec_sb1, trans_y_ec_sb,
+		.75, .75,
+		255, 0, 0);
+
+	// Green Boy
+	drawSchoolBoy(trans_x_ec_sb2, trans_y_ec_sb,
+		-.75, .75,
+		0, 255, 0);
+
+	// Red Graduate
+	drawGraduatedBoy(trans_x_ec_gb, trans_y_ec_gb,
+		.75, .75,
+		255, 0, 0);
+
+	// Green Graduate
+	drawGraduatedBoy(trans_x_ec_gb - 110, trans_y_ec_gb,
+		.75, .75,
+		0, 255, 0);
+}
+
+void EC_drawEngineeringCollege() {
+	EC_drawFrontFacingBuilding();
+	EC_drawLeftWing();
+	EC_drawRightWing();
+}
+
+void EC_drawBoard() {
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 30, 60);
+	glVertex2f(500, 660);
+	glVertex2f(900, 660);
+	glVertex2f(900, 760);
+	glVertex2f(500, 760);
+	glEnd();
+
+	glLineWidth(10);
+	glBegin(GL_LINES);
+	glVertex2f(625, 650);
+	glVertex2f(625, 670);
+	glEnd();
+	glLineWidth(1);
+
+	glLineWidth(10);
+	glBegin(GL_LINES);
+	glVertex2f(775, 650);
+	glVertex2f(775, 670);
+	glEnd();
+	glLineWidth(1);
+
+	glBegin(GL_POLYGON);
+	glColor3ub(2, 36, 80);
+	glVertex2f(505, 665);
+	glVertex2f(895, 665);
+	glColor3ub(0, 22, 52);
+	glVertex2f(895, 755);
+	glVertex2f(505, 755);
+	glEnd();
+
+	print("Las Vegas Institute of Technology",
+		1, 1, 1, 1,
+		530, 715,
+		.1, .1,
+		1);
+
+	print("Affiliated to VTU, Belagavi",
+		1, 1, 1, 1,
+		590, 695,
+		.08, .08,
+		1);
+}
+
+// Engineering College
+void engineeringCollege() {
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	EC_drawBackground();
+	EC_drawRoad();
+
+	EC_drawEngineeringCollege();
+
+	EC_drawTrees();
+	EC_drawBoys();
+
+	EC_drawBoard();
+
+	print("Some students end up in Engineering, irrespective of what path they took in the past...",
+		1, 1, 1, ec_subtitle_1_fade, 60, 30, .14, .14, 1);
+}
+
+// Workplace Title Screen
+void workplaceTitleScreen() {
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	// Story Title
+	print("CHAPTER 4",
+		1, 1, 1, e, 300, 500 - trans_x_chap4, .2, .2, 2);
+	print("Pre University College",
+		1, 1, 1, puc_title_fade, 400 - trans_x_title4, 450 - trans_x_title4, .3, .3, 2);
+}
+
 // Function to Render Scene
 void renderScene() {
 	// Switch to know which scene is playing
@@ -2364,6 +2897,12 @@ void renderScene() {
 		break;
 	case 10:
 		engineeringCollegeTitleScreen();
+		break;
+	case 11:
+		engineeringCollege();
+		break;
+	case 12:
+		workplaceTitleScreen();
 		break;
 	default:
 		break;
@@ -2662,6 +3201,30 @@ void update(int) {
 
 		if (eng_title_fade < 1)
 			eng_title_fade += .025;
+	}
+
+	if (SCENE_ID == 11) {
+		if (trans_x_ec_sb1 >= -180)
+			trans_x_ec_sb1 -= 4;
+		if (trans_x_ec_sb2 >= -2050)
+			trans_x_ec_sb2 -= 4;
+
+		if (trans_x_ec_sb1 <= -180 && trans_x_ec_sb2 <= -2050 && !ec_graduation_done) {
+			trans_y_ec_sb += 1000;
+			ec_graduation_done = true;
+		}
+
+		if (ec_graduation_done) {
+			if (trans_y_ec_gb != 40) {
+				trans_y_ec_gb -= 1000;
+			}
+			if (trans_x_ec_gb >= -1200)
+				trans_x_ec_gb -= 2;
+		}
+
+		if (ec_subtitle_1_fade < 1)
+			ec_subtitle_1_fade += 0.005;
+
 	}
 
 	// Recalls the Display Function
