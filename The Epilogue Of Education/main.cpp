@@ -30,7 +30,8 @@ GLfloat title_fade,
 	puc_subtitle_1_fade,
 	eng_chap_fade, eng_title_fade,
 	ec_subtitle_1_fade,
-	wp_chap_fade, wp_title_fade;
+	wp_chap_fade, wp_title_fade,
+	wp_subtitle_1_fade;
 
 // Variables for Translation Animators
 GLfloat trans_x_chap1, trans_x_title1,
@@ -3211,6 +3212,9 @@ void workplace() {
 	WP_drawServerBox();
 
 	WP_drawThoughtBubble();
+
+	print("Eventually, most engineers irrespective of his/her branch end up in front of the screen...",
+		1, 1, 1, wp_subtitle_1_fade, 35, 30, .14, .14, 1);
 }
 
 // Function to Render Scene
@@ -3579,7 +3583,7 @@ void update(int) {
 				trans_x_ec_gb -= 2;
 		}
 
-		if (ec_subtitle_1_fade < 1)
+		if (ec_subtitle_1_fade <= 1)
 			ec_subtitle_1_fade += 0.005;
 	}
 
@@ -3655,9 +3659,11 @@ void update(int) {
 		}
 
 		if (wp_tb_s1_done && wp_tb_s2_done && wp_tb_s3_done && wp_tb_big_done) {
-			if (wp_tb_text <= 1) {
+			if (wp_tb_text <= 1)
 				wp_tb_text += .005;
-			}
+
+			if (wp_subtitle_1_fade <= 1)
+				wp_subtitle_1_fade += .005;
 		}
 	}
 
