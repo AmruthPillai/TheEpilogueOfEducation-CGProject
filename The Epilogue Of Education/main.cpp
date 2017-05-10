@@ -3051,34 +3051,31 @@ void WP_drawAC() {
 	glLineWidth(1);
 }
 
-
 bool server_on;
-bool Light_on;
+bool light_a = true, light_b, light_c, light_d;
 
-void WP_drawServerLight(GLfloat tx, GLfloat ty, GLfloat Light_r, GLfloat Light_g, GLfloat Light_b, bool Light_on){
+void WP_drawServerLight(GLfloat tx, GLfloat ty,
+	GLfloat light_r, GLfloat light_g, GLfloat light_b,
+	bool light_on) {
 	glPushMatrix();
 	glTranslatef(tx, ty, 0);
+
 	glBegin(GL_POLYGON);
-	glColor3ub(Light_r, Light_g, Light_b);
+	if (light_on)
+		glColor3ub(light_r, light_g, light_b);
+	else
+		glColor3ub(30, 30, 30);
 	glVertex2f(0, 0);
 	glVertex2f(6, 0);
 	glVertex2f(6, 6);
 	glVertex2f(0, 6);
 	glEnd();
 
-	// glBegin(GL_LINE_LOOP);
-	// glColor3ub(255, 255, 255);
-	// glVertex2f(0, 0);
-	// glVertex2f(6, 0);
-	// glVertex2f(6, 6);
-	// glVertex2f(0, 6);
-	// glEnd();
-
-
 	glPopMatrix();
 }
 
-void WP_drawServer(GLfloat tx, GLfloat ty, bool server_on) {
+void WP_drawServer(GLfloat tx, GLfloat ty,
+	bool server_on) {
 	glPushMatrix();
 	glTranslatef(tx, ty, 0);
 
@@ -3097,20 +3094,13 @@ void WP_drawServer(GLfloat tx, GLfloat ty, bool server_on) {
 			1, 1, 3);
 	}
 
-	WP_drawServerLight(1100, 492, 246, 233, 192, 1);
-
-	WP_drawServerLight(1125, 492, 243, 201, 32, 1);
-
-	WP_drawServerLight(1150, 492, 255, 167, 50, 1);
-
-	WP_drawServerLight(1175, 492, 21, 123, 193, 1);
-
-
+	WP_drawServerLight(1100, 492, 246, 233, 192, light_a);
+	WP_drawServerLight(1125, 492, 243, 201, 32, light_b);
+	WP_drawServerLight(1150, 492, 255, 167, 50, light_c);
+	WP_drawServerLight(1175, 492, 21, 123, 193, light_d);
 
 	glPopMatrix();
 }
-
-
 
 void WP_drawServerInnerBox(GLfloat tx, GLfloat ty) {
 	glPushMatrix();
@@ -3619,6 +3609,28 @@ void update(int) {
 				wp_tb_s1 += .25;
 			else
 				wp_tb_s1_done = true;
+		}
+
+		if (light_a) {
+			light_a = false;
+			light_b = true;
+			light_c = false;
+			light_d = false;
+		} else if (light_b) {
+			light_a = false;
+			light_b = false;
+			light_c = true;
+			light_d = false;
+		} else if (light_c) {
+			light_a = false;
+			light_b = false;
+			light_c = false;
+			light_d = true;
+		} else {
+			light_a = true;
+			light_b = false;
+			light_c = false;
+			light_d = false;
 		}
 
 		if (wp_tb_s1_done && !wp_tb_s2_done) {
