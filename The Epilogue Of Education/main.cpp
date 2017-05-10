@@ -26,7 +26,8 @@ GLfloat title_fade,
 	hs_chap_fade, hs_title_fade,
 	hs_subtitle_1_appear,
 	puc_chap_fade, puc_title_fade,
-	puc_subtitle_1_fade;
+	puc_subtitle_1_fade,
+	eng_chap_fade, eng_title_fade;
 
 // Variables for Translation Animators
 GLfloat trans_x_chap1, trans_x_title1,
@@ -37,7 +38,8 @@ GLfloat trans_x_chap1, trans_x_title1,
 	trans_x_chap4, trans_x_title4,
 	sun_move_left,
 	schoolboy_x = 1150, schoolboy_y = 5220,
-	trans_x_sb1 = -630, trans_y_sb1 = -50, trans_x_sb2 = -1630, trans_y_sb2 = -50;
+	trans_x_sb1 = -630, trans_y_sb1 = -50, trans_x_sb2 = -1630, trans_y_sb2 = -50,
+	trans_x_chap5, trans_x_title5;
 
 // Variables for Color Morphers
 GLfloat window_top_r = 59, window_top_g = 91, window_top_b = 132,
@@ -2313,6 +2315,19 @@ void PUC() {
 		1, 1, 1, puc_subtitle_1_fade, 300, 30, .14, .14, 1);
 }
 
+// Engineering College Title Screen
+void engineeringCollegeTitleScreen() {
+	// Background
+	glClearColor(0.05, 0.05, 0.05, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	// Story Title
+	print("CHAPTER 5",
+		1, 1, 1, eng_chap_fade, 300 + trans_x_chap5, 400, .2, .2, 2);
+	print("Engineering College",
+		1, 1, 1, eng_title_fade, 400 - trans_x_title5, 350, .3, .3, 2);
+}
+
 // Function to Render Scene
 void renderScene() {
 	// Switch to know which scene is playing
@@ -2346,6 +2361,9 @@ void renderScene() {
 		break;
 	case 9:
 		PUC();
+		break;
+	case 10:
+		engineeringCollegeTitleScreen();
 		break;
 	default:
 		break;
@@ -2601,7 +2619,7 @@ void update(int) {
 			puc_subtitle_1_fade += 0.005;
 
 		if (!puc_begin_anim) {
-			delay(2);
+			delay(1);
 			puc_begin_anim = true;
 		}
 
@@ -2629,6 +2647,21 @@ void update(int) {
 			if (trans_y_sb2 <= 5000)
 				trans_y_sb2 += 5000;
 		}
+	}
+
+	// Engineering College Title Screen
+	if (SCENE_ID == 10) {
+		if (trans_x_chap5 < 100)
+			trans_x_chap5 += 1;
+
+		if (trans_x_title5 < 100)
+			trans_x_title5 += 1;
+
+		if (eng_chap_fade < 1)
+			eng_chap_fade += .025;
+
+		if (eng_title_fade < 1)
+			eng_title_fade += .025;
 	}
 
 	// Recalls the Display Function
