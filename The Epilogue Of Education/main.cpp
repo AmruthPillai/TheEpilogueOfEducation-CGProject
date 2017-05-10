@@ -3136,6 +3136,36 @@ void WP_drawServerBox() {
 	WP_drawServerInnerBox(0, -330);
 }
 
+bool wp_tb_s1_done, wp_tb_s2_done, wp_tb_s3_done, wp_tb_big_done;
+GLfloat wp_tb_s1, wp_tb_s2, wp_tb_s3, wp_tb_big,
+	wp_tb_text;
+
+void WP_drawThoughtBubble() {
+	// Thought Bubble Leads
+	drawCircle(365, 410, 240, 240, 240, 1, 1, wp_tb_s1);
+	drawCircle(400, 430, 240, 240, 240, 1, 1, wp_tb_s2);
+	drawCircle(435, 450, 240, 240, 240, 1, 1, wp_tb_s3);
+
+	// Thought Bubble
+	drawCircle(500, 480, 240, 240, 240, 1, 1, wp_tb_big);
+	drawCircle(540, 500, 240, 240, 240, 1, 1, wp_tb_big);
+	drawCircle(580, 500, 240, 240, 240, 1, 1, wp_tb_big);
+	drawCircle(620, 500, 240, 240, 240, 1, 1, wp_tb_big);
+	drawCircle(660, 500, 240, 240, 240, 1, 1, wp_tb_big);
+	drawCircle(700, 480, 240, 240, 240, 1, 1, wp_tb_big);
+	drawCircle(540, 460, 240, 240, 240, 1, 1, wp_tb_big);
+	drawCircle(580, 460, 240, 240, 240, 1, 1, wp_tb_big);
+	drawCircle(620, 460, 240, 240, 240, 1, 1, wp_tb_big);
+	drawCircle(660, 460, 240, 240, 240, 1, 1, wp_tb_big);
+
+	// Text inside Thought Bubble
+	print("Is this what I want to be doing",
+		0, 0, 0, wp_tb_text, 480, 480, .075, .075, 1);
+
+	print("for the rest of my life?",
+		0, 0, 0, wp_tb_text, 505, 460, .075, .075, 1);
+}
+
 // Workplace
 void workplace() {
 	// Background
@@ -3152,6 +3182,8 @@ void workplace() {
 
 	WP_drawAC();
 	WP_drawServerBox();
+
+	WP_drawThoughtBubble();
 }
 
 // Function to Render Scene
@@ -3297,7 +3329,7 @@ void update(int) {
 		if (trans_x_kid1 < 40)
 			trans_x_kid1 += .4;
 
-		if (trans_x_kid2 < 30)
+		if (trans_x_kid2 < wp_tb_big)
 			trans_x_kid2 += .3;
 
 		if (trans_x_kid3 < 40)
@@ -3544,6 +3576,40 @@ void update(int) {
 		} else {
 			server_on = true;
 		}
+
+		if (!wp_tb_s1_done) {
+			if (wp_tb_s1 <= 10)
+				wp_tb_s1 += .25;
+			else
+				wp_tb_s1_done = true;
+		}
+
+		if (wp_tb_s1_done && !wp_tb_s2_done) {
+			if (wp_tb_s2 <= 10)
+				wp_tb_s2 += .25;
+			else
+				wp_tb_s2_done = true;
+		}
+
+		if (wp_tb_s1_done && wp_tb_s2_done && !wp_tb_s3_done) {
+			if (wp_tb_s3 <= 10)
+				wp_tb_s3 += .25;
+			else
+				wp_tb_s3_done = true;
+		}
+
+		if (wp_tb_s1_done && wp_tb_s2_done && wp_tb_s3_done && !wp_tb_big_done) {
+			if (wp_tb_big <= 30)
+				wp_tb_big += .5;
+			else
+				wp_tb_big_done = true;
+		}
+
+		if (wp_tb_s1_done && wp_tb_s2_done && wp_tb_s3_done && wp_tb_big_done) {
+			if (wp_tb_text <= 1) {
+				wp_tb_text += .005;
+			}
+		}
 	}
 
 	// Recalls the Display Function
@@ -3620,3 +3686,4 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
+//
