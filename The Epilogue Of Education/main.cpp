@@ -3051,7 +3051,32 @@ void WP_drawAC() {
 	glLineWidth(1);
 }
 
+
 bool server_on;
+bool Light_on;
+
+void WP_drawServerLight(GLfloat tx, GLfloat ty, GLfloat Light_r, GLfloat Light_g, GLfloat Light_b, bool Light_on){
+	glPushMatrix();
+	glTranslatef(tx, ty, 0);
+	glBegin(GL_POLYGON);
+	glColor3ub(Light_r, Light_g, Light_b);
+	glVertex2f(0, 0);
+	glVertex2f(6, 0);
+	glVertex2f(6, 6);
+	glVertex2f(0, 6);
+	glEnd();
+
+	// glBegin(GL_LINE_LOOP);
+	// glColor3ub(255, 255, 255);
+	// glVertex2f(0, 0);
+	// glVertex2f(6, 0);
+	// glVertex2f(6, 6);
+	// glVertex2f(0, 6);
+	// glEnd();
+
+
+	glPopMatrix();
+}
 
 void WP_drawServer(GLfloat tx, GLfloat ty, bool server_on) {
 	glPushMatrix();
@@ -3067,13 +3092,25 @@ void WP_drawServer(GLfloat tx, GLfloat ty, bool server_on) {
 	glEnd();
 
 	if (server_on) {
-		drawCircle(990, 490,
+		drawCircle(990, 492,
 			255, 255, 0,
 			1, 1, 3);
 	}
 
+	WP_drawServerLight(1100, 492, 246, 233, 192, 1);
+
+	WP_drawServerLight(1125, 492, 243, 201, 32, 1);
+
+	WP_drawServerLight(1150, 492, 255, 167, 50, 1);
+
+	WP_drawServerLight(1175, 492, 21, 123, 193, 1);
+
+
+
 	glPopMatrix();
 }
+
+
 
 void WP_drawServerInnerBox(GLfloat tx, GLfloat ty) {
 	glPushMatrix();
