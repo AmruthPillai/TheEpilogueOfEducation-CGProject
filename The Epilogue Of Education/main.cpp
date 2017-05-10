@@ -3634,14 +3634,14 @@ void update(int) {
 		}
 
 		if (wp_tb_s1_done && !wp_tb_s2_done) {
-			if (wp_tb_s2 <= 10)
+			if (wp_tb_s2 <= 12)
 				wp_tb_s2 += .25;
 			else
 				wp_tb_s2_done = true;
 		}
 
 		if (wp_tb_s1_done && wp_tb_s2_done && !wp_tb_s3_done) {
-			if (wp_tb_s3 <= 10)
+			if (wp_tb_s3 <= 14)
 				wp_tb_s3 += .25;
 			else
 				wp_tb_s3_done = true;
