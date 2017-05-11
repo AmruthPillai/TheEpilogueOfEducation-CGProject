@@ -3806,28 +3806,6 @@ void keyPress(unsigned char key, int x, int y) {
 	glutPostRedisplay();
 }
 
-int menu_id, value;
-
-// Function to Assign Menu Indexes to Values
-void menu (int num) {
-  if (num == 0) {
-    exit(0);
-  } else {
-    value = num;
-  }
-
-  glutPostRedisplay();
-}
-
-// Function to Initialize Menu
-void glutMenuFunc() {
-	glutAddMenuEntry("Scene 1: Introduction", 0);
-	glutAddMenuEntry("Scene 2: Summary", 1);
-
-	menu_id = glutCreateMenu(menu);
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-}
-
 // Function to Initialize Screen
 void initializeScreen() {
 	glMatrixMode(GL_PROJECTION);
@@ -3857,9 +3835,6 @@ int main(int argc, char **argv) {
 	// Input Functions
 	glutKeyboardFunc(keyPress);
 	glutMouseFunc(mouseClick);
-
-	// Initialize Menu
-	glutMenuFunc();
 
 	initializeScreen();
 
